@@ -25,6 +25,9 @@ class Foyer(tk.Frame):
     def __init__(self, master):
         master.geometry("960x720")
         tk.Frame.__init__(self, master)
+        img = PIL.Image.open('map.png')
+        photo=PIL.ImageTk.PhotoImage(img)
+        
         w = tk.Canvas(self, width=960, height=720)
         w.pack()
         
