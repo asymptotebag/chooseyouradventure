@@ -54,7 +54,7 @@ class Foyer(tk.Frame):
         position = position.resize((70,90))
         pos = PIL.ImageTk.PhotoImage(position)
         
-        loc = tk.Button(self, image = pos,
+        loc = tk.Button(self, image = pos,background = "#3d85c6", borderwidth=0,
                    command=lambda: master.switch_frame(Cage))
         loc.image = pos
         loc_window = w.create_window(30, 600, window = loc)
