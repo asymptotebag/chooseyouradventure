@@ -35,7 +35,6 @@ class Foyer(tk.Frame):
         
         im = PIL.Image.open('library.png')
         photo = PIL.ImageTk.PhotoImage(im)
-        self.photo = tk.PhotoImage(im)
         screen = w.create_image((0,0), image = photo, anchor = 'nw')
         w.image = photo
         
@@ -50,6 +49,15 @@ class Foyer(tk.Frame):
         quit = tk.Button(self, text = "Quit", bg='blue', fg = 'white', 
                    command = lambda: master.switch_frame(End))
         quit_window = w.create_window(20,20, window = quit)
+        
+        position = PIL.Image.open('map.png')
+        position = position.resize((70,90))
+        pos = PIL.ImageTk.PhotoImage(position)
+        
+        loc = tk.Button(self, image = pos,
+                   command=lambda: master.switch_frame(Cage))
+        loc.image = pos
+        loc_window = w.create_window(30, 600, window = loc)
         
 # initialize Edit Filter screen and widgets
 class Cage(tk.Frame):
