@@ -41,10 +41,6 @@ class Foyer(tk.Frame):
         screen = w.create_image((0,0), image = photo, anchor = 'nw')
         w.image = photo
         
-        cage = tk.Button(self, text="FREE CANDY\nTHROUGH HERE",
-                   command=lambda: master.switch_frame(Cage))
-        cage_window = w.create_window(900,400, window = cage)
-        
         door = tk.Button(self, text="Exit through the front door",
                    command=lambda: master.switch_frame(End))
         door_window = w.create_window(100,100, window = door)
