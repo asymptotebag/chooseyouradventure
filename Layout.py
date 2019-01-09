@@ -1,9 +1,13 @@
 import PIL
 import os.path  
 import PIL.ImageDraw            
+import random
 import PIL.ImageFont  
 import tkinter as tk
+from tkinter.filedialog import askopenfilename,askdirectory
 from PIL import ImageTk 
+from PIL import ImageFilter
+
        
 class SampleApp(tk.Tk):
     def __init__(self):
@@ -25,13 +29,19 @@ class Foyer(tk.Frame):
     def __init__(self, master):
         master.geometry("960x720")
         tk.Frame.__init__(self, master)
+        
         w = tk.Canvas(self, width=960, height=720)
         w.pack()
+        
+        im = PIL.Image.open('library.png')
+        photo = PIL.ImageTk.PhotoImage(im)
+        self.photo = tk.PhotoImage(im)
+        screen = w.create_image((0,0), image = photo, anchor = 'nw')
+        w.image = photo
         
         cage = tk.Button(self, text="FREE CANDY\nTHROUGH HERE",
                    command=lambda: master.switch_frame(Cage))
         cage_window = w.create_window(900,100, window = cage)
-        print cage.size
         
         door = tk.Button(self, text="Exit through the front door",
                    command=lambda: master.switch_frame(End))
