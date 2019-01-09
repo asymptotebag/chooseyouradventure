@@ -8,7 +8,10 @@ from tkinter.filedialog import askopenfilename,askdirectory
 from PIL import ImageTk 
 from PIL import ImageFilter
 
-       
+   
+bag = []
+
+      
 class SampleApp(tk.Tk):
     def __init__(self):
         tk.Tk.__init__(self)
@@ -21,14 +24,14 @@ class SampleApp(tk.Tk):
         if self._frame is not None:
             self._frame.destroy()
         self._frame = new_frame
-        self._frame.pack()
+        self._frame.pack()   
         
-
 # initialize start location (foyer) and widgets
 class Foyer(tk.Frame):
     def __init__(self, master):
         master.geometry("960x720")
         tk.Frame.__init__(self, master)
+        
         
         w = tk.Canvas(self, width=960, height=720)
         w.pack()
@@ -40,24 +43,51 @@ class Foyer(tk.Frame):
         
         cage = tk.Button(self, text="FREE CANDY\nTHROUGH HERE",
                    command=lambda: master.switch_frame(Cage))
-        cage_window = w.create_window(900,100, window = cage)
+        cage_window = w.create_window(900,400, window = cage)
         
         door = tk.Button(self, text="Exit through the front door",
                    command=lambda: master.switch_frame(End))
         door_window = w.create_window(100,100, window = door)
                    
-        quit = tk.Button(self, text = "Quit", bg='blue', fg = 'white', 
+        quit = tk.Button(self, text = "QUIT", bg='#073763', fg = 'white', bd = 0, height = 2, width = 4,
                    command = lambda: master.switch_frame(End))
-        quit_window = w.create_window(20,20, window = quit)
+        quit_window = w.create_window(30,30, window = quit)
         
         position = PIL.Image.open('map.png')
         position = position.resize((70,90))
         pos = PIL.ImageTk.PhotoImage(position)
-        
         loc = tk.Button(self, image = pos,background = "#3d85c6", borderwidth=0,
                    command=lambda: master.switch_frame(Cage))
         loc.image = pos
-        loc_window = w.create_window(30, 600, window = loc)
+        loc_window = w.create_window(60, 650, window = loc)
+        
+        back = PIL.Image.open('backpack.png')
+        back = back.resize((85,100))
+        pack = PIL.ImageTk.PhotoImage(back)
+        inv = tk.Button(self, image = pack, background = "#3d85c6", borderwidth=0,
+                   command=lambda: master.switch_frame(Cage))
+        inv.image = pack
+        inv_window = w.create_window(830, 590, window = inv, anchor  = 'nw')
+        
+        clock = PIL.Image.open('clock.png')
+        clock = clock.resize((100,100))
+        time = PIL.ImageTk.PhotoImage(clock)
+        timer = tk.Button(self, image = time, background = "#9fc5e8", borderwidth=0,
+                   command=lambda: master.switch_frame(Cage))
+        timer.image = time
+        timer_window = w.create_window(860, 20, window = timer, anchor  = 'nw')
+        
+        ex = PIL.Image.open('exit.png')
+        ex = ex.resize((50,50))
+        out = PIL.ImageTk.PhotoImage(ex)
+        chu = tk.Button(self, image = out, background = "#6fa8dc", borderwidth=0, relief = 'flat',
+                   command=lambda: master.switch_frame(End))
+        chu.image = out
+        chu_window = w.create_window(15, 450, window = chu, anchor  = 'nw')
+        
+        candy = tk.Button(self, text = 'FREE CANDY \n THROUGH HERE', background = "#6fa8dc", borderwidth=0, relief = 'flat',
+                   command=lambda: master.switch_frame(Cage))
+        candy_window = w.create_window(705, 450, window = candy, anchor  = 'nw')
         
 # initialize Edit Filter screen and widgets
 class Cage(tk.Frame):
