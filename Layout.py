@@ -4,13 +4,9 @@ import PIL.ImageDraw
 import random
 import PIL.ImageFont  
 import tkinter as tk
-from tkinter.filedialog import askopenfilename,askdirectory
 from PIL import ImageTk 
-from PIL import ImageFilter
 
-   
 bag = []
-
       
 class SampleApp(tk.Tk):
     def __init__(self):
@@ -41,8 +37,8 @@ class Foyer(tk.Frame):
         screen = w.create_image((0,0), image = photo, anchor = 'nw')
         w.image = photo
         
-        door = tk.Button(self, text="Exit through the front door",
-                   command=lambda: master.switch_frame(End))
+        door = tk.Button(self, text="Testing testing 1 2 3 ", #this is temporary for testing
+                   command=lambda: master.switch_frame(Dark))
         door_window = w.create_window(100,100, window = door)
                    
         quit = tk.Button(self, text = "QUIT", bg='#073763', fg = 'white', bd = 0, height = 2, width = 4,
@@ -53,7 +49,7 @@ class Foyer(tk.Frame):
         position = position.resize((70,90))
         pos = PIL.ImageTk.PhotoImage(position)
         loc = tk.Button(self, image = pos,background = "#3d85c6", borderwidth=0,
-                   command=lambda: master.switch_frame(Cage))
+                   command=lambda: master.switch_frame(Map))
         loc.image = pos
         loc_window = w.create_window(60, 650, window = loc)
         
@@ -61,7 +57,7 @@ class Foyer(tk.Frame):
         back = back.resize((85,100))
         pack = PIL.ImageTk.PhotoImage(back)
         inv = tk.Button(self, image = pack, background = "#3d85c6", borderwidth=0,
-                   command=lambda: master.switch_frame(Cage))
+                   command=lambda: master.switch_frame(Backpack))
         inv.image = pack
         inv_window = w.create_window(830, 590, window = inv, anchor  = 'nw')
         
@@ -69,7 +65,7 @@ class Foyer(tk.Frame):
         clock = clock.resize((100,100))
         time = PIL.ImageTk.PhotoImage(clock)
         timer = tk.Button(self, image = time, background = "#9fc5e8", borderwidth=0,
-                   command=lambda: master.switch_frame(Cage))
+                   command=lambda: master.switch_frame(Timer))
         timer.image = time
         timer_window = w.create_window(860, 20, window = timer, anchor  = 'nw')
         
@@ -81,18 +77,51 @@ class Foyer(tk.Frame):
         chu.image = out
         chu_window = w.create_window(15, 450, window = chu, anchor  = 'nw')
         
-        candy = tk.Button(self, text = 'FREE CANDY \n THROUGH HERE', background = "#6fa8dc", borderwidth=0, relief = 'flat',
+        candy = tk.Button(self, text = 'FREE\nCANDY\nHERE', background = "#6fa8dc", borderwidth=0, relief = 'flat', padx=0,
                    command=lambda: master.switch_frame(Cage))
-        candy_window = w.create_window(705, 450, window = candy, anchor  = 'nw')
+        candy_window = w.create_window(890, 450, window = candy, anchor  = 'nw')
         
 # initialize Edit Filter screen and widgets
 class Cage(tk.Frame):
     def __init__(self, master):
         tk.Frame.__init__(self, master)
-        tk.Label(self, text = "Cage").grid(row = 0, column = 0, columnspan = 4)
+        #tk.Label(self, text = "Cage").grid(row = 0, column = 0, columnspan = 4)
 
-        tk.Button(self, text="Pick Lock",
-                  command=lambda: master.switch_frame(Library)).grid(row = 2, column = 0, columnspan = 4, sticky = "WE")
+                
+        w = tk.Canvas(self, width=960, height=720)
+        w.pack()
+        
+        quit = tk.Button(self, text = "QUIT", bg='#073763', fg = 'white', bd = 0, height = 2, width = 4,
+                   command = lambda: master.switch_frame(End))
+        quit_window = w.create_window(30,30, window = quit)
+        
+        position = PIL.Image.open('map.png')
+        position = position.resize((70,90))
+        pos = PIL.ImageTk.PhotoImage(position)
+        loc = tk.Button(self, image = pos,background = "#3d85c6", borderwidth=0,
+                   command=lambda: master.switch_frame(CMap))
+        loc.image = pos
+        loc_window = w.create_window(60, 650, window = loc)
+        
+        back = PIL.Image.open('backpack.png')
+        back = back.resize((85,100))
+        pack = PIL.ImageTk.PhotoImage(back)
+        inv = tk.Button(self, image = pack, background = "#3d85c6", borderwidth=0,
+                   command=lambda: master.switch_frame(Backpack))
+        inv.image = pack
+        inv_window = w.create_window(830, 590, window = inv, anchor  = 'nw')
+        
+        clock = PIL.Image.open('clock.png')
+        clock = clock.resize((100,100))
+        time = PIL.ImageTk.PhotoImage(clock)
+        timer = tk.Button(self, image = time, background = "#9fc5e8", borderwidth=0,
+                   command=lambda: master.switch_frame(Timer))
+        timer.image = time
+        timer_window = w.create_window(860, 20, window = timer, anchor  = 'nw')
+        
+        
+        #tk.Button(self, text="Pick Lock",
+        #          command=lambda: master.switch_frame(Library)).grid(row = 2, column = 0, columnspan = 4, sticky = "WE")
  
                         
 # prompted by Open Image button
@@ -148,6 +177,21 @@ class Dungeon(tk.Frame):
         tk.Button(self, text="Library",
                   command=lambda: master.switch_frame(Library)).grid(row = 9, column = 0, columnspan = 4, sticky = "WE")
 
+class Dark(tk.Frame):
+    def __init__(self, master):
+        tk.Frame.__init__(self, master)
+                
+        dark = tk.Canvas(self, width=960, height=720)
+        dark.pack()
+        
+        bgim = PIL.Image.new('RGB', (960,720))
+        bg = PIL.ImageTk.PhotoImage(bgim)
+        black = dark.create_image((0,0), image = bg, anchor = 'nw')
+        dark.image = bg
+        
+        switch = tk.Button(self, text = 'CONGRATS ON FINDING \n THE LIGHT SWITCH', bg = 'black', bd = 0,
+                  command=lambda: master.switch_frame(Library))
+        switch_window = dark.create_window(603, 450, window = switch, anchor  = 'nw')
         
 # initialize Garden screen                                                                                                                                                              
 class Garden(tk.Frame):
@@ -161,7 +205,22 @@ class Garden(tk.Frame):
 class End(tk.Frame):
     def __init__(self, master):
         tk.Frame.__init__(self, master)
-        tk.Label(self, text = "Thanks for playing").grid(row = 0, column = 0) ##                                                          
+        tk.Label(self, text = "Thanks for playing").grid(row = 0, column = 0) ##   
+        
+class Map(tk.Frame):
+    def __init__(self, master):
+        tk.Frame.__init__(self, master)
+        tk.Label(self, text = "Map").grid(row = 0, column = 0) ##    
+        
+class Backpack(tk.Frame):
+    def __init__(self, master):
+        tk.Frame.__init__(self, master)
+        tk.Label(self, text = "Inventory").grid(row = 0, column = 0) ##    
+
+class Timer(tk.Frame):
+    def __init__(self, master):
+        tk.Frame.__init__(self, master)
+        tk.Label(self, text = "Time is running out!").grid(row = 0, column = 0) ##                                                                                                        
 
 if __name__ == "__main__":
     app = SampleApp()
