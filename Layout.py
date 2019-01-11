@@ -67,19 +67,15 @@ class Foyer(tk.Frame):
         timer = tk.Button(self, image = time, background = "#9fc5e8", borderwidth=0,
                    command=lambda: master.switch_frame(Timer))
         timer.image = time
-        timer_window = w.create_window(860, 20, window = timer, anchor  = 'nw')
+        timer_window = w.create_window(850, 20, window = timer, anchor  = 'nw')
         
-        ex = PIL.Image.open('exit.png')
-        ex = ex.resize((50,50))
-        out = PIL.ImageTk.PhotoImage(ex)
-        chu = tk.Button(self, image = out, background = "#6fa8dc", borderwidth=0, relief = 'flat',
+        chu = tk.Button(self, background = "#6fa8dc", borderwidth=0, relief = 'flat', width = 10, height = 8, 
                    command=lambda: master.switch_frame(End))
-        chu.image = out
-        chu_window = w.create_window(15, 450, window = chu, anchor  = 'nw')
+        chu_window = w.create_window(2, 432, window = chu, anchor  = 'nw')
         
-        candy = tk.Button(self, text = 'FREE\nCANDY\nHERE', background = "#6fa8dc", borderwidth=0, relief = 'flat', padx=0,
+        candy = tk.Button(self, text = 'FREE\nCANDY\nHERE', background = "#6fa8dc", width =9, height = 8, borderwidth=0, relief = 'flat', padx=0,
                    command=lambda: master.switch_frame(Cage))
-        candy_window = w.create_window(890, 450, window = candy, anchor  = 'nw')
+        candy_window = w.create_window(890, 432, window = candy, anchor  = 'nw')
         
 # initialize Edit Filter screen and widgets
 class Cage(tk.Frame):
@@ -117,7 +113,7 @@ class Cage(tk.Frame):
         timer = tk.Button(self, image = time, background = "#9fc5e8", borderwidth=0,
                    command=lambda: master.switch_frame(Timer))
         timer.image = time
-        timer_window = w.create_window(860, 20, window = timer, anchor  = 'nw')
+        timer_window = w.create_window(850, 20, window = timer, anchor  = 'nw')
         
         
         #tk.Button(self, text="Pick Lock",
