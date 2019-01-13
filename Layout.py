@@ -12,7 +12,7 @@ class SampleApp(tk.Tk):
     def __init__(self):
         tk.Tk.__init__(self)
         self._frame = None
-        self.switch_frame(Foyer)
+        self.switch_frame(Welcome)
 
     # switching between screens
     def switch_frame(self, frame_class):
@@ -23,11 +23,65 @@ class SampleApp(tk.Tk):
         self._frame.pack()   
         
 # initialize start location (foyer) and widgets
-class Foyer(tk.Frame):
+
+class Welcome(tk.Frame):
     def __init__(self, master):
         master.geometry("960x720")
         tk.Frame.__init__(self, master)
         
+        w = tk.Canvas(self, width=960, height=720)
+        w.pack()
+        
+        im = PIL.Image.open('Welcome.png')
+        photo = PIL.ImageTk.PhotoImage(im)
+        screen = w.create_image((0,0), image = photo, anchor = 'nw')
+        w.image = photo
+
+               
+        pl = PIL.Image.open('play.png')
+        pl = pl.resize((67,67))
+        start = PIL.ImageTk.PhotoImage(pl)
+        play = tk.Button(self, image = start,background = "#fe0000", borderwidth=0,
+                   command=lambda: master.switch_frame(Instructions))
+        play.image = start
+        play_window = w.create_window(740, 500, window = play)
+
+
+class Instructions(tk.Frame):
+    def __init__(self, master):
+        tk.Frame.__init__(self, master)    
+        
+        w = tk.Canvas(self, width=960, height=720)
+        w.pack()
+        
+        im = PIL.Image.open('Instructions.png')
+        photo = PIL.ImageTk.PhotoImage(im)
+        screen = w.create_image((0,0), image = photo, anchor = 'nw')
+        w.image = photo
+        
+        cont = tk.Button(self, text = 'CONTINUE',
+                   command=lambda: master.switch_frame(Intro))
+        cont_window = w.create_window(480, 600, window = cont)
+        
+class Intro(tk.Frame):
+    def __init__(self, master):
+        tk.Frame.__init__(self, master)    
+        
+        w = tk.Canvas(self, width=960, height=720)
+        w.pack()
+        
+        im = PIL.Image.open('Instructions.png')
+        photo = PIL.ImageTk.PhotoImage(im)
+        screen = w.create_image((0,0), image = photo, anchor = 'nw')
+        w.image = photo
+        
+        cont = tk.Button(self, text = 'CONTINUE',
+                   command=lambda: master.switch_frame(Intro))
+        cont_window = w.create_window(480, 370, window = cont)
+         
+class Foyer(tk.Frame):
+    def __init__(self, master):
+        tk.Frame.__init__(self, master)    
         
         w = tk.Canvas(self, width=960, height=720)
         w.pack()
