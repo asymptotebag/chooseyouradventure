@@ -5,8 +5,10 @@ import random
 import PIL.ImageFont  
 import tkinter as tk
 from PIL import ImageTk 
+import time
 
 bag = []
+start=0
       
 class SampleApp(tk.Tk):
     def __init__(self):
@@ -20,7 +22,39 @@ class SampleApp(tk.Tk):
         if self._frame is not None:
             self._frame.destroy()
         self._frame = new_frame
-        self._frame.pack()   
+        self._frame.pack() 
+    '''
+    def __init__(self):
+        self.root = tk.Tk()
+        self.label = tk.Label(text="")
+        self.label.pack()
+        self.update_clock()
+        self.root.mainloop()'''
+
+    def update_clock(self):
+        
+        now=time.localtime()[3]*3600+ time.localtime()[4]*60+time.localtime()[5]
+        
+        dif = now-start
+        hrs = dif%3600
+        minutes = dif%60
+        sec = dif-(hrs*3600)-(minutes*60)
+        
+        timer = str(hrs)+':'+str(minutes)+':'+str(sec)
+        
+        #self.label.configure(text=now)
+        #self.root.after(1000, self.update_clock)
+    
+    # add item to inventory      
+    def add_item(self, item):
+        if len(bag)<7:
+            bag.append(item)
+        #else: 
+            #look up how to have a message pop up
+    
+    # remove item from inventory
+    def remove_item(self, item):
+        bag.remove(item)
         
 # initialize start location (foyer) and widgets
 
@@ -81,6 +115,10 @@ class Intro(tk.Frame):
 
 class Foyer(tk.Frame):
     def __init__(self, master):
+        #master.update_clock()
+        
+        #start = time.localtime()[3]*3600 + time.localtime()[4]*60 + time.localtime()[5]
+        
         tk.Frame.__init__(self, master)    
         
         w = tk.Canvas(self, width=960, height=720)
@@ -328,13 +366,18 @@ class Map(tk.Frame):
 class Backpack(tk.Frame):
     def __init__(self, master):
         tk.Frame.__init__(self, master)
-        tk.Label(self, text = "Inventory").grid(row = 0, column = 0) ##    
-
+        tk.Label(self, text = "Inventory").grid(row = 0, column = 0)
+        
+        inventory =''
+        for item in bag:
+            inventory= inventory+'\n'+item  
+        tk.Label(self, text=inventory).grid(row=2, column=0)
+        
 class Timer(tk.Frame):
     def __init__(self, master):
         tk.Frame.__init__(self, master)
         tk.Label(self, text = "Time is running out!").grid(row = 0, column = 0) ##                                                                                                        
-
+    
 if __name__ == "__main__":
     app = SampleApp()
     app.mainloop()
