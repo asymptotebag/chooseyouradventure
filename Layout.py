@@ -70,15 +70,15 @@ class Intro(tk.Frame):
         w = tk.Canvas(self, width=960, height=720)
         w.pack()
         
-        im = PIL.Image.open('Instructions.png')
+        im = PIL.Image.open('Prologue.png')
         photo = PIL.ImageTk.PhotoImage(im)
         screen = w.create_image((0,0), image = photo, anchor = 'nw')
         w.image = photo
         
-        cont = tk.Button(self, text = 'CONTINUE',
-                   command=lambda: master.switch_frame(Intro))
-        cont_window = w.create_window(480, 370, window = cont)
-         
+        cont = tk.Button(self, text = 'ENTER',
+                   command=lambda: master.switch_frame(Foyer))
+        cont_window = w.create_window(480, 650, window = cont)
+
 class Foyer(tk.Frame):
     def __init__(self, master):
         tk.Frame.__init__(self, master)    
@@ -318,7 +318,7 @@ class End(tk.Frame):
         tk.Frame.__init__(self, master)
         tk.Label(self, text = ' ').grid(row = 0, column = 0)
         tk.Label(self, text = ' ').grid(row = 1, column = 0)
-        tk.Label(self, text = "Thanks for playing").grid(row = 3, column = 0) ##   
+        tk.Label(self, text = "Thanks for playing! See you another time.").grid(row = 3, column = 0) ##   
         
 class Map(tk.Frame):
     def __init__(self, master):
