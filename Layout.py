@@ -6,6 +6,7 @@ import PIL.ImageFont
 import tkinter as tk
 from PIL import ImageTk 
 import time
+from tkinter import messagebox
 
 bag = []
       
@@ -24,11 +25,13 @@ class SampleApp(tk.Tk):
         self._frame.pack() 
         
     # add item to inventory      
-    def add_item(self, item):
+    def add_item(self, item, inventory):
         if len(bag)<7:
             bag.append(item)
-        #else: 
-            #look up how to have a message pop up
+            str_inventory = '\n'.join(inventory)
+            messagebox.showinfo("Inventory",str_inventory)
+        else: 
+            messagebox.showinfo("Error","Too many items in inventory")
     
     # remove item from inventory
     def remove_item(self, item):
@@ -160,7 +163,7 @@ class Cage(tk.Frame):
         ex = ex.resize((100,100))
         q = PIL.ImageTk.PhotoImage(ex)
         quit = tk.Button(self, image = q, background = "#7f735d", borderwidth=0,
-                   command=lambda: master.switch_frame(End))
+                   command=lambda: master.add_item("hi\nbye", bag))
         quit.image = q
         quit_window = w.create_window(10, 60, window = quit, anchor  = 'nw')
         
