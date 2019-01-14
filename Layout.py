@@ -89,7 +89,7 @@ class Intro(tk.Frame):
         
         cont = tk.Button(self, text = 'ENTER',
                    command=lambda: master.switch_frame(Foyer))
-        cont_window = w.create_window(480, 650, window = cont)
+        cont_window = w.create_window(480, 600, window = cont)
 
 class Foyer(tk.Frame):
     def __init__(self, master):        
