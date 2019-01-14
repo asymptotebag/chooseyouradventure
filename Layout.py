@@ -104,7 +104,7 @@ class Foyer(tk.Frame):
         w.image = photo
         
         door = tk.Button(self, text="Testing testing 1 2 3 ", #this is temporary for testing
-                   command=lambda: master.switch_frame(Dark))
+                   command=lambda: master.switch_frame(Cage))
         door_window = w.create_window(500,300, window = door)
                    
         ex = PIL.Image.open('quit.png')
@@ -164,6 +164,25 @@ class Cage(tk.Frame):
         quit.image = q
         quit_window = w.create_window(10, 60, window = quit, anchor  = 'nw')
         
+        lock = PIL.Image.open('lock.png')
+        lock = lock.resize((35,45))
+        lock2 = PIL.ImageTk.PhotoImage(lock)
+        lock3 = tk.Button(self, image = lock2, background = "#7d5b16", state = "disabled", borderwidth=0,
+                            command = lambda: master.switch_frame(Library))
+        lock3.image = lock2
+        lock_window = w.create_window(595,310, window = lock3)
+        
+        key = False
+        def have_key():
+            key = True
+            lock3["state"] = "normal"
+        
+        metal = PIL.Image.open('metal.png')
+        metal2 = PIL.ImageTk.PhotoImage(metal)
+        metal3 = tk.Button(self, image = metal2, background = "#0a0907", borderwidth=0,
+                            command = lambda: have_key())
+        metal3.image = metal2
+        metal_window = w.create_window(310,540, window = metal3)
         
         position = PIL.Image.open('map.png')
         position = position.resize((70,90))
@@ -180,10 +199,6 @@ class Cage(tk.Frame):
                    command=lambda: master.switch_frame(Backpack))
         inv.image = pack
         inv_window = w.create_window(850, 650, window = inv)
-        
-        lock = tk.Button(self, text="Pick Lock",
-                  command=lambda: master.switch_frame(Library))
-        lock_window = w.create_window(400, 400, window = lock)
                         
 # prompted by Open Image button
 class Library(tk.Frame):
@@ -207,7 +222,6 @@ class Library(tk.Frame):
                    command=lambda: master.switch_frame(End))
         quit.image = q
         quit_window = w.create_window(10, 70, window = quit, anchor  = 'nw')
-        
         
         position = PIL.Image.open('map.png')
         position = position.resize((70,90))
