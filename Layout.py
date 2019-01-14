@@ -8,7 +8,6 @@ from PIL import ImageTk
 import time
 
 bag = []
-start=0
       
 class SampleApp(tk.Tk):
     def __init__(self):
@@ -23,28 +22,7 @@ class SampleApp(tk.Tk):
             self._frame.destroy()
         self._frame = new_frame
         self._frame.pack() 
-    '''
-    def __init__(self):
-        self.root = tk.Tk()
-        self.label = tk.Label(text="")
-        self.label.pack()
-        self.update_clock()
-        self.root.mainloop()'''
-
-    def update_clock(self):
         
-        now=time.localtime()[3]*3600+ time.localtime()[4]*60+time.localtime()[5]
-        
-        dif = now-start
-        hrs = dif%3600
-        minutes = dif%60
-        sec = dif-(hrs*3600)-(minutes*60)
-        
-        timer = str(hrs)+':'+str(minutes)+':'+str(sec)
-        
-        #self.label.configure(text=now)
-        #self.root.after(1000, self.update_clock)
-    
     # add item to inventory      
     def add_item(self, item):
         if len(bag)<7:
@@ -114,11 +92,7 @@ class Intro(tk.Frame):
         cont_window = w.create_window(480, 650, window = cont)
 
 class Foyer(tk.Frame):
-    def __init__(self, master):
-        #master.update_clock()
-        
-        #start = time.localtime()[3]*3600 + time.localtime()[4]*60 + time.localtime()[5]
-        
+    def __init__(self, master):        
         tk.Frame.__init__(self, master)    
         
         w = tk.Canvas(self, width=960, height=720)
@@ -158,19 +132,11 @@ class Foyer(tk.Frame):
         inv.image = pack
         inv_window = w.create_window(850, 650, window = inv)
         
-        clock = PIL.Image.open('clock.png')
-        clock = clock.resize((100,100))
-        time = PIL.ImageTk.PhotoImage(clock)
-        timer = tk.Button(self, image = time, background = "#9b5c27", borderwidth=0,
-                   command=lambda: master.switch_frame(Timer))
-        timer.image = time
-        timer_window = w.create_window(850, 60, window = timer, anchor  = 'nw')
-        
         chu = tk.Button(self, background = "#89430c", borderwidth=0, relief = 'flat', width = 6, height = 8, 
                    command=lambda: master.switch_frame(End))
         chu_window = w.create_window(2, 370, window = chu, anchor  = 'nw')
         
-        candy = tk.Button(self, text = 'FREE\nCANDY\nHERE', background = "#89430c", width =6, height = 8, borderwidth=0, relief = 'flat', padx=0,
+        candy = tk.Button(self, background = "#89430c", width =6, height = 8, borderwidth=0, relief = 'flat', padx=0,
                    command=lambda: master.switch_frame(Cage))
         candy_window = w.create_window(890, 370, window = candy, anchor  = 'nw')
         
@@ -215,14 +181,6 @@ class Cage(tk.Frame):
         inv.image = pack
         inv_window = w.create_window(850, 650, window = inv)
         
-        clock = PIL.Image.open('clock.png')
-        clock = clock.resize((100,100))
-        time = PIL.ImageTk.PhotoImage(clock)
-        timer = tk.Button(self, image = time, background = "#7f735d", borderwidth=0,
-                   command=lambda: master.switch_frame(Timer))
-        timer.image = time
-        timer_window = w.create_window(850, 60, window = timer, anchor  = 'nw')
-        
         lock = tk.Button(self, text="Pick Lock",
                   command=lambda: master.switch_frame(Library))
         lock_window = w.create_window(400, 400, window = lock)
@@ -266,14 +224,6 @@ class Library(tk.Frame):
                    command=lambda: master.switch_frame(Backpack))
         inv.image = pack
         inv_window = w.create_window(850, 650, window = inv)
-        
-        clock = PIL.Image.open('clock.png')
-        clock = clock.resize((100,100))
-        time = PIL.ImageTk.PhotoImage(clock)
-        timer = tk.Button(self, image = time, background = "#9b5c27", borderwidth=0,
-                   command=lambda: master.switch_frame(Timer))
-        timer.image = time
-        timer_window = w.create_window(850, 70, window = timer, anchor  = 'nw')
              
         kitchen = tk.Button(self, background = "#783f04", borderwidth=0, relief = 'flat', width = 5, height = 9, 
                    command=lambda: master.switch_frame(Kitchen))
@@ -300,16 +250,84 @@ class Kitchen(tk.Frame):
                   command=lambda: master.switch_frame(Garden)).grid(row=10, column = 0, columnspan = 5, sticky = "WE")
         tk.Button(self, text="Oven",
                   command=lambda: master.switch_frame(Oven)).grid(row=11, column = 0, columnspan = 5, sticky = "WE")
+        tk.Button(self, text="Fridge",
+                  command=lambda: master.switch_frame(Refrigerator)).grid(row=12, column = 0, columnspan = 5, sticky = "WE")
                                   
 # initialize Edit Filter screen and widgets
 class Pantry(tk.Frame):
     def __init__(self, master):
         tk.Frame.__init__(self, master)
-        tk.Label(self, text = "Pantry").grid(row = 0, column = 0, columnspan = 4)
         
-        tk.Button(self, text="Kitchen",
-                  command=lambda: master.switch_frame(Kitchen)).grid(row = 2, column = 0, columnspan = 4, sticky = "WE")
-                  
+        w = tk.Canvas(self, width=960, height=720)
+        w.pack()
+        
+        im = PIL.Image.open('Pantry.png')
+        photo = PIL.ImageTk.PhotoImage(im)
+        screen = w.create_image((0,0), image = photo, anchor = 'nw')
+        w.image = photo
+                
+        ex = PIL.Image.open('quit.png')
+        ex = ex.resize((100,100))
+        q = PIL.ImageTk.PhotoImage(ex)
+        quit = tk.Button(self, image = q, background = "#9f9f9f", borderwidth=0,
+                   command=lambda: master.switch_frame(Kitchen))
+        quit.image = q
+        quit_window = w.create_window(10, 70, window = quit, anchor  = 'nw')
+        
+        
+        position = PIL.Image.open('map.png')
+        position = position.resize((70,90))
+        pos = PIL.ImageTk.PhotoImage(position)
+        loc = tk.Button(self, image = pos,background = "#959595", borderwidth=0,
+                   command=lambda: master.switch_frame(Map))
+        loc.image = pos
+        loc_window = w.create_window(70, 650, window = loc)
+        
+        back = PIL.Image.open('backpack.png')
+        back = back.resize((85,100))
+        pack = PIL.ImageTk.PhotoImage(back)
+        inv = tk.Button(self, image = pack, background = "#959595", borderwidth=0,
+                   command=lambda: master.switch_frame(Backpack))
+        inv.image = pack
+        inv_window = w.create_window(850, 650, window = inv)
+
+class Refrigerator(tk.Frame):
+    def __init__(self, master):
+        tk.Frame.__init__(self, master)
+        
+        w = tk.Canvas(self, width=960, height=720)
+        w.pack()
+        
+        im = PIL.Image.open('Refrigerator.png')
+        photo = PIL.ImageTk.PhotoImage(im)
+        screen = w.create_image((0,0), image = photo, anchor = 'nw')
+        w.image = photo
+                
+        ex = PIL.Image.open('quit.png')
+        ex = ex.resize((100,100))
+        q = PIL.ImageTk.PhotoImage(ex)
+        quit = tk.Button(self, image = q, background = "#9f9f9f", borderwidth=0,
+                   command=lambda: master.switch_frame(Kitchen))
+        quit.image = q
+        quit_window = w.create_window(10, 70, window = quit, anchor  = 'nw')
+        
+        
+        position = PIL.Image.open('map.png')
+        position = position.resize((70,90))
+        pos = PIL.ImageTk.PhotoImage(position)
+        loc = tk.Button(self, image = pos,background = "#959595", borderwidth=0,
+                   command=lambda: master.switch_frame(Map))
+        loc.image = pos
+        loc_window = w.create_window(70, 650, window = loc)
+        
+        back = PIL.Image.open('backpack.png')
+        back = back.resize((85,100))
+        pack = PIL.ImageTk.PhotoImage(back)
+        inv = tk.Button(self, image = pack, background = "#959595", borderwidth=0,
+                   command=lambda: master.switch_frame(Backpack))
+        inv.image = pack
+        inv_window = w.create_window(850, 650, window = inv)
+                
 class Oven(tk.Frame):
     def __init__(self, master):
         tk.Frame.__init__(self, master)
@@ -346,18 +364,7 @@ class Oven(tk.Frame):
                    command=lambda: master.switch_frame(Backpack))
         inv.image = pack
         inv_window = w.create_window(850, 650, window = inv)
-        
-        clock = PIL.Image.open('clock.png')
-        clock = clock.resize((100,100))
-        time = PIL.ImageTk.PhotoImage(clock)
-        timer = tk.Button(self, image = time, background = "#9f9f9f", borderwidth=0,
-                   command=lambda: master.switch_frame(Timer))
-        timer.image = time
-        timer_window = w.create_window(850, 70, window = timer, anchor  = 'nw')
              
-        kitchen = tk.Button(self, background = "#9f9f9f", borderwidth=0, relief = 'flat', width = 5, height = 9, 
-                   command=lambda: master.switch_frame(Kitchen))
-        kitchen_window = w.create_window(2, 350, window = kitchen, anchor  = 'nw')
                   
 # initialize Edit Logo screen and widgets        
 class Dungeon(tk.Frame):
@@ -397,14 +404,6 @@ class Dungeon(tk.Frame):
                    command=lambda: master.switch_frame(Backpack))
         inv.image = pack
         inv_window = w.create_window(850, 650, window = inv)
-        
-        clock = PIL.Image.open('clock.png')
-        clock = clock.resize((100,100))
-        time = PIL.ImageTk.PhotoImage(clock)
-        timer = tk.Button(self, image = time, background = "#1a0300", borderwidth=0,
-                   command=lambda: master.switch_frame(Timer))
-        timer.image = time
-        timer_window = w.create_window(850, 70, window = timer, anchor  = 'nw')
              
         library = tk.Button(self, background = "#523e2f", borderwidth=0, relief = 'flat', width = 5, height = 9, 
                    command=lambda: master.switch_frame(Library))
@@ -464,14 +463,6 @@ class Garden(tk.Frame):
                    command=lambda: master.switch_frame(Backpack))
         inv.image = pack
         inv_window = w.create_window(850, 650, window = inv)
-        
-        clock = PIL.Image.open('clock.png')
-        clock = clock.resize((100,100))
-        time = PIL.ImageTk.PhotoImage(clock)
-        timer = tk.Button(self, image = time, background = "#b9e2fb", borderwidth=0,
-                   command=lambda: master.switch_frame(Timer))
-        timer.image = time
-        timer_window = w.create_window(850, 70, window = timer, anchor  = 'nw')
              
         kitchen = tk.Button(self, background = "#502902", borderwidth=0, relief = 'flat', width = 5, height = 9, 
                    command=lambda: master.switch_frame(Kitchen))
@@ -497,12 +488,7 @@ class Backpack(tk.Frame):
         inventory =''
         for item in bag:
             inventory= inventory+'\n'+item  
-        tk.Label(self, text=inventory).grid(row=2, column=0)
-        
-class Timer(tk.Frame):
-    def __init__(self, master):
-        tk.Frame.__init__(self, master)
-        tk.Label(self, text = "Time is running out!").grid(row = 0, column = 0) ##                                                                                                        
+        tk.Label(self, text=inventory).grid(row=2, column=0)                                                                                                     
     
 if __name__ == "__main__":
     app = SampleApp()
