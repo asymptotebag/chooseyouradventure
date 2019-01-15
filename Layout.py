@@ -42,7 +42,6 @@ class SampleApp(tk.Tk):
         
 # initialize start location (foyer) and widgets
 
-# change Kitchen to Instructions
 class Welcome(tk.Frame):
     def __init__(self, master):
         master.geometry("960x720")
@@ -61,7 +60,7 @@ class Welcome(tk.Frame):
         pl = pl.resize((67,67))
         start = PIL.ImageTk.PhotoImage(pl)
         play = tk.Button(self, image = start,background = "#fe0000", borderwidth=0,
-                   command=lambda: master.switch_frame(Kitchen))
+                   command=lambda: master.switch_frame(Instructions))
         play.image = start
         play_window = w.create_window(740, 500, window = play)
 
