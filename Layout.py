@@ -250,7 +250,18 @@ class Library(tk.Frame):
                    command=lambda: master.switch_frame(Dungeon))
         dungeon_window = w.create_window(900, 350, window = dungeon, anchor  = 'nw')  
         
-                          
+        
+        yellow = tk.Button(self, background = "#dfed09", borderwidth=0, relief = 'flat', width = 2, height = 2, 
+                   command=lambda: master.switch_frame(Dungeon))
+        yellow_window = w.create_window(660, 351, window = yellow, anchor  = 'nw')  
+        
+        red = tk.Button(self, background = "#c02b5b", borderwidth=0, relief = 'flat', width = 9, height = 1, pady=0, 
+                   command=lambda: master.switch_frame(Dungeon))
+        red_window = w.create_window(431, 423, window = red, anchor  = 'nw')  
+        
+        brown = tk.Button(self, background = "#895825", borderwidth=0, relief = 'flat', width = 2, height = 2, 
+                   command=lambda: master.switch_frame(Dungeon))
+        brown_window = w.create_window(716, 361, window = brown, anchor  = 'nw')                      
                                                               
 # initialize Kitchen screen and widgets
 class Kitchen(tk.Frame):
@@ -299,15 +310,21 @@ class Kitchen(tk.Frame):
                             command = lambda: master.switch_frame(Oven))
         oven_window = w.create_window(300, 370, window = oven)
         
+        pantry = PIL.Image.open('cabinets.png')
+        cab = PIL.ImageTk.PhotoImage(pantry)
+        cabinet = tk.Button(self, image = cab, background = "#e6c991", borderwidth=0,
+                   command=lambda: master.switch_frame(Pantry))
+        cabinet.image = cab
+        cabinet_window = w.create_window(509, 174, window = cabinet, anchor = 'nw')
             
         #### REPLACE DOORS
-        kitchen = tk.Button(self, background = "#783f04", borderwidth=0, relief = 'flat', width = 5, height = 9, 
-                   command=lambda: master.switch_frame(Kitchen))
-        kitchen_window = w.create_window(2, 350, window = kitchen, anchor  = 'nw')
+        garden = tk.Button(self, background = "#783f04", borderwidth=0, relief = 'flat', width = 5, height = 9, 
+                   command=lambda: master.switch_frame(Garden))
+        garden_window = w.create_window(2, 350, window = garden, anchor  = 'nw')
 
-        dungeon = tk.Button(self, background = "#783f04", borderwidth=0, relief = 'flat', width = 5, height = 9, 
-                   command=lambda: master.switch_frame(Dungeon))
-        dungeon_window = w.create_window(900, 350, window = dungeon, anchor  = 'nw')  
+        library = tk.Button(self, background = "#783f04", borderwidth=0, relief = 'flat', width = 5, height = 9, 
+                   command=lambda: master.switch_frame(Library))
+        library_window = w.create_window(900, 350, window = library, anchor  = 'nw')  
          
 # initialize Edit Filter screen and widgets
 class Pantry(tk.Frame):
@@ -325,7 +342,7 @@ class Pantry(tk.Frame):
         ex = PIL.Image.open('quit.png')
         ex = ex.resize((100,100))
         q = PIL.ImageTk.PhotoImage(ex)
-        quit = tk.Button(self, image = q, background = "#9f9f9f", borderwidth=0,
+        quit = tk.Button(self, image = q, background = "#9B5C27", borderwidth=0,
                    command=lambda: master.switch_frame(Kitchen))
         quit.image = q
         quit_window = w.create_window(10, 70, window = quit, anchor  = 'nw')
@@ -334,7 +351,7 @@ class Pantry(tk.Frame):
         position = PIL.Image.open('map.png')
         position = position.resize((70,90))
         pos = PIL.ImageTk.PhotoImage(position)
-        loc = tk.Button(self, image = pos,background = "#959595", borderwidth=0,
+        loc = tk.Button(self, image = pos,background = "#B27D4B", borderwidth=0,
                    command=lambda: master.switch_frame(Map))
         loc.image = pos
         loc_window = w.create_window(70, 650, window = loc)
@@ -342,7 +359,7 @@ class Pantry(tk.Frame):
         back = PIL.Image.open('backpack.png')
         back = back.resize((85,100))
         pack = PIL.ImageTk.PhotoImage(back)
-        inv = tk.Button(self, image = pack, background = "#959595", borderwidth=0,
+        inv = tk.Button(self, image = pack, background = "#B27D4B", borderwidth=0,
                    command=lambda: master.switch_frame(Backpack))
         inv.image = pack
         inv_window = w.create_window(850, 650, window = inv)
@@ -362,7 +379,7 @@ class Refrigerator(tk.Frame):
         ex = PIL.Image.open('quit.png')
         ex = ex.resize((100,100))
         q = PIL.ImageTk.PhotoImage(ex)
-        quit = tk.Button(self, image = q, background = "#9f9f9f", borderwidth=0,
+        quit = tk.Button(self, image = q, background = "#CCCCCC", borderwidth=0,
                    command=lambda: master.switch_frame(Kitchen))
         quit.image = q
         quit_window = w.create_window(10, 70, window = quit, anchor  = 'nw')
@@ -371,7 +388,7 @@ class Refrigerator(tk.Frame):
         position = PIL.Image.open('map.png')
         position = position.resize((70,90))
         pos = PIL.ImageTk.PhotoImage(position)
-        loc = tk.Button(self, image = pos,background = "#959595", borderwidth=0,
+        loc = tk.Button(self, image = pos,background = "#EFEFEF", borderwidth=0,
                    command=lambda: master.switch_frame(Map))
         loc.image = pos
         loc_window = w.create_window(70, 650, window = loc)
@@ -379,7 +396,7 @@ class Refrigerator(tk.Frame):
         back = PIL.Image.open('backpack.png')
         back = back.resize((85,100))
         pack = PIL.ImageTk.PhotoImage(back)
-        inv = tk.Button(self, image = pack, background = "#959595", borderwidth=0,
+        inv = tk.Button(self, image = pack, background = "#EFEFEF", borderwidth=0,
                    command=lambda: master.switch_frame(Backpack))
         inv.image = pack
         inv_window = w.create_window(850, 650, window = inv)
@@ -464,7 +481,24 @@ class Dungeon(tk.Frame):
         library = tk.Button(self, background = "#523e2f", borderwidth=0, relief = 'flat', width = 5, height = 9, 
                    command=lambda: master.switch_frame(Library))
         library_window = w.create_window(2, 350, window = library, anchor  = 'nw')
-
+        
+        
+        left = tk.Button(self, background = "#5C5C5C", borderwidth=0, relief = 'flat', width =9, height = 4, 
+                   command=lambda: master.switch_frame(Library))
+        left_window = w.create_window(229, 481, window = left, anchor  = 'nw')  
+        
+        midleft = tk.Button(self, background = "#454545", borderwidth=0, relief = 'flat', width = 9, height = 4,
+                   command=lambda: master.switch_frame(Library))
+        midleft_window = w.create_window(372, 454, window = midleft, anchor  = 'nw')  
+        
+        midright = tk.Button(self, background = "#545253", borderwidth=0, relief = 'flat', width = 9, height = 4, 
+                   command=lambda: master.switch_frame(Library))
+        midright_window = w.create_window(534, 478, window = midright, anchor  = 'nw')      
+        
+        right = tk.Button(self, background = "#30302F", borderwidth=0, relief = 'flat', width = 9, height = 4, 
+                   command=lambda: master.switch_frame(Library))
+        right_window = w.create_window(721, 458, window = right, anchor  = 'nw')    
+        
 class Dark(tk.Frame):
     def __init__(self, master):
         tk.Frame.__init__(self, master)
