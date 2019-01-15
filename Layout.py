@@ -25,11 +25,10 @@ class SampleApp(tk.Tk):
         self._frame.pack() 
         
     # add item to inventory      
-    def add_item(self, item, inventory):
+    def add_item(self, item):
         if len(bag)<7:
             bag.append(item)
-            str_inventory = '\n'.join(inventory)
-            messagebox.showinfo("Inventory",str_inventory)
+            messagebox.showinfo("Confirmation", str(item)+" has been added to inventory")
         else: 
             messagebox.showinfo("Error","Too many items in inventory")
     
@@ -37,8 +36,13 @@ class SampleApp(tk.Tk):
     def remove_item(self, item):
         bag.remove(item)
         
+    def show_inventory(self):
+        str_inventory = '\n'.join(bag)
+        messagebox.showinfo("Inventory",str_inventory)
+        
 # initialize start location (foyer) and widgets
 
+# change Kitchen to Instructions
 class Welcome(tk.Frame):
     def __init__(self, master):
         master.geometry("960x720")
@@ -57,7 +61,7 @@ class Welcome(tk.Frame):
         pl = pl.resize((67,67))
         start = PIL.ImageTk.PhotoImage(pl)
         play = tk.Button(self, image = start,background = "#fe0000", borderwidth=0,
-                   command=lambda: master.switch_frame(Instructions))
+                   command=lambda: master.switch_frame(Kitchen))
         play.image = start
         play_window = w.create_window(740, 500, window = play)
 
@@ -131,7 +135,7 @@ class Foyer(tk.Frame):
         back = back.resize((85,100))
         pack = PIL.ImageTk.PhotoImage(back)
         inv = tk.Button(self, image = pack, background = "#b37d4b", borderwidth=0,
-                   command=lambda: master.switch_frame(Backpack))
+                   command=lambda: master.show_inventory())
         inv.image = pack
         inv_window = w.create_window(850, 650, window = inv)
         
@@ -199,7 +203,7 @@ class Cage(tk.Frame):
         back = back.resize((85,100))
         pack = PIL.ImageTk.PhotoImage(back)
         inv = tk.Button(self, image = pack, background = "#0a0907", borderwidth=0,
-                   command=lambda: master.switch_frame(Backpack))
+                   command=lambda: master.show_inventory())
         inv.image = pack
         inv_window = w.create_window(850, 650, window = inv)
                         
@@ -238,7 +242,7 @@ class Library(tk.Frame):
         back = back.resize((85,100))
         pack = PIL.ImageTk.PhotoImage(back)
         inv = tk.Button(self, image = pack, background = "#7f735d", borderwidth=0,
-                   command=lambda: master.switch_frame(Backpack))
+                   command=lambda: master.show_inventory())
         inv.image = pack
         inv_window = w.create_window(850, 650, window = inv)
              
@@ -298,17 +302,17 @@ class Kitchen(tk.Frame):
         back = back.resize((85,100))
         pack = PIL.ImageTk.PhotoImage(back)
         inv = tk.Button(self, image = pack, background = "#e6c991", borderwidth=0,
-                   command=lambda: master.switch_frame(Backpack))
+                   command=lambda: master.show_inventory())
         inv.image = pack
         inv_window = w.create_window(850, 650, window = inv)
         
-        fridge = tk.Button(self, background = "#E7E8EA", borderwidth = 0, width = 16, height = 12, 
+        fridge = tk.Button(self, background = "#E7E8EA", borderwidth = 0, width = 11, height = 7, 
                             command = lambda: master.switch_frame(Refrigerator))
         fridge_window = w.create_window(187, 370, window = fridge, anchor = 'nw')
         
-        oven = tk.Button(self, background = "#E7E8EA", borderwidth = 0, width = 13, height = 15,
+        oven = tk.Button(self, background = "#E7E8EA", borderwidth = 0, width = 8, height = 1,
                             command = lambda: master.switch_frame(Oven))
-        oven_window = w.create_window(300, 370, window = oven)
+        oven_window = w.create_window(480, 470, window = oven)
         
         pantry = PIL.Image.open('cabinets.png')
         cab = PIL.ImageTk.PhotoImage(pantry)
@@ -360,7 +364,7 @@ class Pantry(tk.Frame):
         back = back.resize((85,100))
         pack = PIL.ImageTk.PhotoImage(back)
         inv = tk.Button(self, image = pack, background = "#B27D4B", borderwidth=0,
-                   command=lambda: master.switch_frame(Backpack))
+                   command=lambda: master.show_inventory())
         inv.image = pack
         inv_window = w.create_window(850, 650, window = inv)
 
@@ -397,7 +401,7 @@ class Refrigerator(tk.Frame):
         back = back.resize((85,100))
         pack = PIL.ImageTk.PhotoImage(back)
         inv = tk.Button(self, image = pack, background = "#EFEFEF", borderwidth=0,
-                   command=lambda: master.switch_frame(Backpack))
+                   command=lambda: master.show_inventory())
         inv.image = pack
         inv_window = w.create_window(850, 650, window = inv)
                 
@@ -434,7 +438,7 @@ class Oven(tk.Frame):
         back = back.resize((85,100))
         pack = PIL.ImageTk.PhotoImage(back)
         inv = tk.Button(self, image = pack, background = "#959595", borderwidth=0,
-                   command=lambda: master.switch_frame(Backpack))
+                   command=lambda: master.show_inventory())
         inv.image = pack
         inv_window = w.create_window(850, 650, window = inv)
              
@@ -474,7 +478,7 @@ class Dungeon(tk.Frame):
         back = back.resize((85,100))
         pack = PIL.ImageTk.PhotoImage(back)
         inv = tk.Button(self, image = pack, background = "#6c614f", borderwidth=0,
-                   command=lambda: master.switch_frame(Backpack))
+                   command=lambda: master.show_inventory())
         inv.image = pack
         inv_window = w.create_window(850, 650, window = inv)
              
@@ -550,7 +554,7 @@ class Garden(tk.Frame):
         back = back.resize((85,100))
         pack = PIL.ImageTk.PhotoImage(back)
         inv = tk.Button(self, image = pack, background = "#274e13", borderwidth=0,
-                   command=lambda: master.switch_frame(Backpack))
+                   command=lambda: master.show_inventory())
         inv.image = pack
         inv_window = w.create_window(850, 650, window = inv)
              
@@ -568,17 +572,7 @@ class End(tk.Frame):
 class Map(tk.Frame):
     def __init__(self, master):
         tk.Frame.__init__(self, master)
-        tk.Label(self, text = "Map").grid(row = 0, column = 0) ##    
-        
-class Backpack(tk.Frame):
-    def __init__(self, master):
-        tk.Frame.__init__(self, master)
-        tk.Label(self, text = "Inventory").grid(row = 0, column = 0)
-        
-        inventory =''
-        for item in bag:
-            inventory= inventory+'\n'+item  
-        tk.Label(self, text=inventory).grid(row=2, column=0)                                                                                                     
+        tk.Label(self, text = "Map").grid(row = 0, column = 0) ##                                                                                                        
     
 if __name__ == "__main__":
     app = SampleApp()
