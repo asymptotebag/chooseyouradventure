@@ -11,7 +11,7 @@ from tkinter import messagebox
 #inventory
 bag = []
 
-
+#inventory = {}
 
 '''
 rooms contains boolean values for each room
@@ -46,6 +46,22 @@ class SampleApp(tk.Tk):
         else: 
             messagebox.showinfo("Error","Too many items in inventory")
     
+    '''
+    def add_item(self, item):
+        total=0
+        for i in inventory: 
+            total = total + inventory[i]
+        
+        if total<7:
+            if item in inventory:
+                inventory[item]=inventory[item]+1
+            else:
+                inventory[item]=1
+            messagebox.showinfo("Confirmation", str(item)+" has been added to inventory")
+        else: 
+            messagebox.showinfo("Error","Too many items in inventory")
+    '''
+        
     # remove item from inventory
     def remove_item(self, item):
         bag.remove(item)
