@@ -8,7 +8,21 @@ from PIL import ImageTk
 import time
 from tkinter import messagebox
 
+#inventory
 bag = []
+
+
+
+'''
+rooms contains boolean values for each room
+    - order of rooms is: Library, Dungeon, Kitchen, Pantry, Fridge, Garden
+    - Foyer, Cage, and Oven are excluded because they are each only visited once
+    - True means that the room has not been visited yet
+    - False means that the room has already been visited
+these values are used to determine whether or not to show a hint 
+
+'''
+rooms = [True, True, True, True, True, True]
       
 class SampleApp(tk.Tk):
     def __init__(self):
@@ -142,7 +156,6 @@ class Foyer(tk.Frame):
         candy = tk.Button(self, background = "#89430c", width =6, height = 8, borderwidth=0, relief = 'flat', padx=0,
                    command=lambda: master.switch_frame(Cage))
         candy_window = w.create_window(890, 370, window = candy, anchor  = 'nw')
-        
 # initialize Edit Filter screen and widgets
 class Cage(tk.Frame):
     def __init__(self, master):
