@@ -226,6 +226,7 @@ class Library(tk.Frame):
         quit.image = q
         quit_window = w.create_window(10, 70, window = quit, anchor  = 'nw')
         
+        
         position = PIL.Image.open('map.png')
         position = position.resize((70,90))
         pos = PIL.ImageTk.PhotoImage(position)
@@ -249,6 +250,18 @@ class Library(tk.Frame):
         dungeon = tk.Button(self, background = "#783f04", borderwidth=0, relief = 'flat', width = 5, height = 9, 
                    command=lambda: master.switch_frame(Dungeon))
         dungeon_window = w.create_window(900, 350, window = dungeon, anchor  = 'nw')  
+          
+        yellow = tk.Button(self, background = "#dfed09", borderwidth=0, relief = 'flat', width = 2, height = 2, 
+                   command=lambda: master.switch_frame(Dungeon))
+        yellow_window = w.create_window(660, 351, window = yellow, anchor  = 'nw')  
+        
+        red = tk.Button(self, background = "#c02b5b", borderwidth=0, relief = 'flat', width = 9, height = 1, pady=0, 
+                   command=lambda: master.switch_frame(Dungeon))
+        red_window = w.create_window(431, 423, window = red, anchor  = 'nw')  
+        
+        brown = tk.Button(self, background = "#895825", borderwidth=0, relief = 'flat', width = 2, height = 2, 
+                   command=lambda: master.switch_frame(Dungeon))
+        brown_window = w.create_window(716, 361, window = brown, anchor  = 'nw') 
         
                           
                                                               
@@ -464,6 +477,23 @@ class Dungeon(tk.Frame):
         library = tk.Button(self, background = "#523e2f", borderwidth=0, relief = 'flat', width = 5, height = 9, 
                    command=lambda: master.switch_frame(Library))
         library_window = w.create_window(2, 350, window = library, anchor  = 'nw')
+        
+        
+        left = tk.Button(self, background = "#5C5C5C", borderwidth=0, relief = 'flat', width =9, height = 4, 
+                   command=lambda: master.switch_frame(Library))
+        left_window = w.create_window(229, 481, window = left, anchor  = 'nw')  
+        
+        midleft = tk.Button(self, background = "#454545", borderwidth=0, relief = 'flat', width = 9, height = 4,
+                   command=lambda: master.switch_frame(Library))
+        midleft_window = w.create_window(372, 454, window = midleft, anchor  = 'nw')  
+        
+        midright = tk.Button(self, background = "#545253", borderwidth=0, relief = 'flat', width = 9, height = 4, 
+                   command=lambda: master.switch_frame(Library))
+        midright_window = w.create_window(534, 478, window = midright, anchor  = 'nw')      
+        
+        right = tk.Button(self, background = "#30302F", borderwidth=0, relief = 'flat', width = 9, height = 4, 
+                   command=lambda: master.switch_frame(Library))
+        right_window = w.create_window(721, 458, window = right, anchor  = 'nw') 
 
 class Dark(tk.Frame):
     def __init__(self, master):
@@ -534,7 +564,14 @@ class End(tk.Frame):
 class Map(tk.Frame):
     def __init__(self, master):
         tk.Frame.__init__(self, master)
-        tk.Label(self, text = "Map").grid(row = 0, column = 0) ##    
+        
+        w = tk.Canvas(self, width=960, height=720)
+        w.pack()
+        
+        im = PIL.Image.open('Game Map.png')
+        photo = PIL.ImageTk.PhotoImage(im)
+        screen = w.create_image((0,0), image = photo, anchor = 'nw')
+        w.image = photo
         
 class Backpack(tk.Frame):
     def __init__(self, master):
