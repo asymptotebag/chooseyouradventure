@@ -7,6 +7,7 @@ import tkinter as tk
 from PIL import ImageTk 
 import time
 from tkinter import messagebox
+import random
 
 #inventory
 bag = []
@@ -239,11 +240,19 @@ class Cage(tk.Frame):
         def have_key():
             key = True
             lock3["state"] = "normal"
-        
+         
+        def search_metal():
+            num = random.randint(1, 4)
+            if num==1:
+                have_key()
+                messagebox.showinfo("You found the key! Let's get out of here!")
+            else:
+                messagebox.showinfo("Sorry, you didn't find the key. Try again?")
+     
         metal = PIL.Image.open('metal.png')
         metal2 = PIL.ImageTk.PhotoImage(metal)
         metal3 = tk.Button(self, image = metal2, background = "#0a0907", borderwidth=0,
-                            command = lambda: have_key())
+                            command = lambda: search_metal()) #PROBABILITY
         metal3.image = metal2
         metal_window = w.create_window(310,540, window = metal3)
         
