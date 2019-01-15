@@ -377,11 +377,11 @@ class Kitchen(tk.Frame):
         inv.image = pack
         inv_window = w.create_window(850, 650, window = inv)
         
-        fridge = tk.Button(self, background = "#E7E8EA", borderwidth = 0, width = 11, height = 7, 
+        fridge = tk.Button(self, background = "#E7E8EA", borderwidth = 0, width = 15, height = 10, 
                             command = lambda: master.switch_frame(Refrigerator))
         fridge_window = w.create_window(187, 370, window = fridge, anchor = 'nw')
         
-        oven = tk.Button(self, background = "#E7E8EA", borderwidth = 0, width = 8, height = 1,
+        oven = tk.Button(self, background = "#E7E8EA", borderwidth = 0, width = 10, height = 3,
                             command = lambda: master.switch_frame(Oven))
         oven_window = w.create_window(480, 470, window = oven)
         
