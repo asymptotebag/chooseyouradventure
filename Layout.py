@@ -574,7 +574,8 @@ class Dark(tk.Frame):
         switch = tk.Button(self, text = 'CONGRATS ON FINDING \n THE LIGHT SWITCH', bg = 'black', bd = 0,
                   command=lambda: master.switch_frame(Library))
         switch_window = dark.create_window(603, 450, window = switch, anchor  = 'nw')
-        
+
+    
 # initialize Garden screen                                                                                                                                                              
 class Garden(tk.Frame):
     def __init__(self, master):
@@ -624,11 +625,7 @@ class End(tk.Frame):
         tk.Label(self, text = ' ').grid(row = 0, column = 0)
         tk.Label(self, text = ' ').grid(row = 1, column = 0)
         tk.Label(self, text = "Thanks for playing! See you another time.").grid(row = 3, column = 0) ##   
-        
-class Map(tk.Frame):
-    def __init__(self, master):
-        tk.Frame.__init__(self, master)
-        tk.Label(self, text = "Map").grid(row = 0, column = 0) ##                                                                                                        
+                                                                                                    
     
 if __name__ == "__main__":
     app = SampleApp()
