@@ -53,7 +53,15 @@ class SampleApp(tk.Tk):
     def show_inventory(self):
         str_inventory = '\n'.join(bag)
         messagebox.showinfo("Inventory",str_inventory)
+    
+    def show_map(self):
+        t = tk.Toplevel(self)
+        t.title('Map')
         
+        im = PIL.Image.open('Game Map.png')
+        ima = PIL.ImageTk.PhotoImage(im)
+        label = tk.Label(t, image = ima).pack()
+        label.image=ima
 # initialize start location (foyer) and widgets
 
 class Welcome(tk.Frame):
@@ -140,7 +148,7 @@ class Foyer(tk.Frame):
         position = position.resize((70,90))
         pos = PIL.ImageTk.PhotoImage(position)
         loc = tk.Button(self, image = pos,background = "#b37d4b", borderwidth=0,
-                   command=lambda: master.switch_frame(Map))
+                   command=lambda: master.show_map())
         loc.image = pos
         loc_window = w.create_window(70, 650, window = loc)
         
@@ -207,7 +215,7 @@ class Cage(tk.Frame):
         position = position.resize((70,90))
         pos = PIL.ImageTk.PhotoImage(position)
         loc = tk.Button(self, image = pos,background = "#0a0907", borderwidth=0,
-                   command=lambda: master.switch_frame(Map))
+                   command=lambda: master.show_map())
         loc.image = pos
         loc_window = w.create_window(70, 650, window = loc)
         
@@ -246,7 +254,7 @@ class Library(tk.Frame):
         position = position.resize((70,90))
         pos = PIL.ImageTk.PhotoImage(position)
         loc = tk.Button(self, image = pos,background = "#7f735d", borderwidth=0,
-                   command=lambda: master.switch_frame(Map))
+                   command=lambda: master.show_map())
         loc.image = pos
         loc_window = w.create_window(70, 650, window = loc)
         
@@ -306,7 +314,7 @@ class Kitchen(tk.Frame):
         position = position.resize((70,90))
         pos = PIL.ImageTk.PhotoImage(position)
         loc = tk.Button(self, image = pos,background = "#e6c991", borderwidth=0,
-                   command=lambda: master.switch_frame(Map))
+                   command=lambda: master.show_map())
         loc.image = pos
         loc_window = w.create_window(70, 650, window = loc)
         
@@ -368,7 +376,7 @@ class Pantry(tk.Frame):
         position = position.resize((70,90))
         pos = PIL.ImageTk.PhotoImage(position)
         loc = tk.Button(self, image = pos,background = "#B27D4B", borderwidth=0,
-                   command=lambda: master.switch_frame(Map))
+                   command=lambda: master.show_map())
         loc.image = pos
         loc_window = w.create_window(70, 650, window = loc)
         
@@ -405,7 +413,7 @@ class Refrigerator(tk.Frame):
         position = position.resize((70,90))
         pos = PIL.ImageTk.PhotoImage(position)
         loc = tk.Button(self, image = pos,background = "#EFEFEF", borderwidth=0,
-                   command=lambda: master.switch_frame(Map))
+                   command=lambda: master.show_map())
         loc.image = pos
         loc_window = w.create_window(70, 650, window = loc)
         
@@ -442,7 +450,7 @@ class Oven(tk.Frame):
         position = position.resize((70,90))
         pos = PIL.ImageTk.PhotoImage(position)
         loc = tk.Button(self, image = pos,background = "#959595", borderwidth=0,
-                   command=lambda: master.switch_frame(Map))
+                   command=lambda: master.show_map())
         loc.image = pos
         loc_window = w.create_window(70, 650, window = loc)
         
@@ -482,7 +490,7 @@ class Dungeon(tk.Frame):
         position = position.resize((70,90))
         pos = PIL.ImageTk.PhotoImage(position)
         loc = tk.Button(self, image = pos,background = "#6c614f", borderwidth=0,
-                   command=lambda: master.switch_frame(Map))
+                   command=lambda: master.show_map())
         loc.image = pos
         loc_window = w.create_window(70, 650, window = loc)
         
@@ -558,7 +566,7 @@ class Garden(tk.Frame):
         position = position.resize((70,90))
         pos = PIL.ImageTk.PhotoImage(position)
         loc = tk.Button(self, image = pos,background = "#274e13", borderwidth=0,
-                   command=lambda: master.switch_frame(Map))
+                   command=lambda: master.show_map())
         loc.image = pos
         loc_window = w.create_window(70, 650, window = loc)
         
