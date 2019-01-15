@@ -62,6 +62,26 @@ class SampleApp(tk.Tk):
         ima = PIL.ImageTk.PhotoImage(im)
         label = tk.Label(t, image = ima).pack()
         label.image=ima
+    
+    def hansel(self):
+        t = tk.Toplevel(self)
+        t.title('Hansel and Gretel')
+        
+        im = PIL.Image.open('Hansel and Gretel.png')
+        ima = PIL.ImageTk.PhotoImage(im)
+        label = tk.Label(t, image = ima).pack()
+        label.image=ima
+    
+    def potions(self):
+        t = tk.Toplevel(self)
+        t.title('Potent Potions')
+        
+        im = PIL.Image.open('Potent Potions.png')
+        ima = PIL.ImageTk.PhotoImage(im)
+        label = tk.Label(t, image = ima).pack()
+        label.image=ima
+
+
 # initialize start location (foyer) and widgets
 
 class Welcome(tk.Frame):
@@ -276,11 +296,11 @@ class Library(tk.Frame):
         
         
         yellow = tk.Button(self, background = "#dfed09", borderwidth=0, relief = 'flat', width = 2, height = 2, 
-                   command=lambda: master.switch_frame(Dungeon))
+                   command=lambda: master.potions())
         yellow_window = w.create_window(660, 351, window = yellow, anchor  = 'nw')  
         
         red = tk.Button(self, background = "#c02b5b", borderwidth=0, relief = 'flat', width = 9, height = 1, pady=0, 
-                   command=lambda: master.switch_frame(Dungeon))
+                   command=lambda: master.hansel())
         red_window = w.create_window(431, 423, window = red, anchor  = 'nw')  
         
         brown = tk.Button(self, background = "#895825", borderwidth=0, relief = 'flat', width = 2, height = 2, 
