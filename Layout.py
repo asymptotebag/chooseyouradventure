@@ -402,12 +402,13 @@ class Kitchen(tk.Frame):
         w = tk.Canvas(self, width=960, height=720)
         w.pack()
         
+        
         im = PIL.Image.open('Kitchen.png')
         photo = PIL.ImageTk.PhotoImage(im)
         screen = w.create_image((0,0), image = photo, anchor = 'nw')
         w.image = photo
-        
-                
+
+                    
         ex = PIL.Image.open('quit.png')
         ex = ex.resize((100,100))
         q = PIL.ImageTk.PhotoImage(ex)
@@ -705,8 +706,14 @@ class Garden(tk.Frame):
         photo = PIL.ImageTk.PhotoImage(im)
         screen = w.create_image((0,0), image = photo, anchor = 'nw')
         w.image = photo
-        
-                
+             
+        if first_vis[5]:
+            hint = PIL.Image.open('hint_garden.png')
+            hin = PIL.ImageTk.PhotoImage(hint)
+            hi = tk.Label(self, image = hin, background = "#274e13")
+            hi.image = hin
+            hi_window = w.create_window(233, 581, window = hi, anchor  = 'nw')
+                    
         ex = PIL.Image.open('quit.png')
         ex = ex.resize((100,100))
         q = PIL.ImageTk.PhotoImage(ex)
