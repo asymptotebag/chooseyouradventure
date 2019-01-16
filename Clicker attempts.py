@@ -7,11 +7,9 @@ import tkinter as tk
 from PIL import ImageTk 
 import time
 from tkinter import messagebox
+import random
 
-#inventory
-bag = []
-
-#inventory = {}
+inventory = {'hello':1, 'sdkf':6, 'this': 10, 'testing':20}
 
 '''
 rooms contains boolean values for each room
@@ -23,7 +21,7 @@ these values are used to determine whether or not to show a hint
 
 '''
 rooms = [True, True, True, True, True, True]
-      
+num_clicks = [0]   
 class SampleApp(tk.Tk):
     def __init__(self):
         tk.Tk.__init__(self)
@@ -40,35 +38,37 @@ class SampleApp(tk.Tk):
         
     # add item to inventory      
     def add_item(self, item):
-        if len(bag)<7:
-            bag.append(item)
-            messagebox.showinfo("Confirmation", str(item)+" has been added to inventory")
-        else: 
-            messagebox.showinfo("Error","Too many items in inventory")
-    
-    '''
-    def add_item(self, item):
-        total=0
-        for i in inventory: 
+        total = 0
+        for i in inventory:
             total = total + inventory[i]
-        
         if total<7:
-            if item in inventory:
-                inventory[item]=inventory[item]+1
+            if (str(item) in inventory):
+                inventory[item] += 1
             else:
-                inventory[item]=1
+                inventory[item] = 1
             messagebox.showinfo("Confirmation", str(item)+" has been added to inventory")
         else: 
             messagebox.showinfo("Error","Too many items in inventory")
-    '''
         
     # remove item from inventory
-    def remove_item(self, item):
-        bag.remove(item)
+    def remove_item(self, item, trade = False):
+        item = item.lower()
+        item = item.strip()
         
-    def show_inventory(self):
-        str_inventory = '\n'.join(bag)
-        messagebox.showinfo("Inventory",str_inventory)
+        if item in inventory:
+            if inventory[item]==1:
+                del inventory[item]
+            else:
+                inventory[item] -= 1
+            
+            if trade:
+                messagebox.showinfo("Item \"" +item+"\" was successfully traded")
+                self.switch_frame(Dungeon)
+            else: 
+                messagebox.showinfo("Item \"" +item+"\" was successfully deleted")
+            self.show_inventory()
+        else:
+            messagebox.showinfo("Error", "Item \"" +item+"\" does not exist in inventory")
     
     def show_map(self):
         t = tk.Toplevel(self)
@@ -87,7 +87,56 @@ class SampleApp(tk.Tk):
         ima = PIL.ImageTk.PhotoImage(im)
         label = tk.Label(t, image = ima).pack()
         label.image=ima
+        
+    def show_inventory(self):
+        t = tk.Toplevel(self)
+        t.title('Inventory')
+        
+        tk.Label(t, text = 'Item').grid(row=0, column = 0, padx= 20, pady=20)
+        tk.Label(t, text = 'Quantity').grid(row=0, column=1, padx= 20, pady=20)
+        
+        items = ''
+        quantities = ''
+        for i in inventory: 
+            items = items + i + '\n'
+            quantities = quantities + str(inventory[i]) +'\n'
+        tk.Label(t, text = items).grid(row=1, column = 0)
+        tk.Label(t, text = quantities).grid(row=1, column = 1)            
+        
+        tk.Label(t, text = '').grid(row = 2, column = 0, columnspan = 2)
+        
+        e=tk.Entry(t)
+        e.grid(row = 3, column = 0, columnspan = 2)
+        e.insert(0,'    item to delete')
+        
+        tk.Button(t, text = 'DELETE ITEM',
+                   command=lambda: self.remove_item(e.get())).grid(row = 4, column = 0, columnspan =  2)
     
+    def trade(self):
+        t = tk.Toplevel(self)
+        t.title('Inventory')
+        
+        tk.Label(t, text = 'Item').grid(row=0, column = 0, padx= 20, pady=20)
+        tk.Label(t, text = 'Quantity').grid(row=0, column=1, padx= 20, pady=20)
+        
+        items = ''
+        quantities = ''
+        for i in inventory: 
+            items = items + i + '\n'
+            quantities = quantities + str(inventory[i]) +'\n'
+        tk.Label(t, text = items).grid(row=1, column = 0)
+        tk.Label(t, text = quantities).grid(row=1, column = 1)            
+        
+        tk.Label(t, text = '').grid(row = 2, column = 0, columnspan = 2)
+        
+        e=tk.Entry(t)
+        e.grid(row = 3, column = 0, columnspan = 2)
+        e.insert(0, 'trade item for entry')
+        
+        tk.Button(t, text = 'TRADE ITEM',
+                   command=lambda: self.remove_item(e.get(), True)).grid(row = 4, column = 0, columnspan =  2)
+                   
+                                       
     def potions(self):
         t = tk.Toplevel(self)
         t.title('Potent Potions')
@@ -96,7 +145,15 @@ class SampleApp(tk.Tk):
         ima = PIL.ImageTk.PhotoImage(im)
         label = tk.Label(t, image = ima).pack()
         label.image=ima
-
+    
+    def win(self):
+        t = tk.Toplevel(self)
+        t.title('Results')
+        if num_clicks[0]>20:
+            tk.Label(t, text = 'Congratulations! You beat the witch!').pack()
+        else:
+            tk.Label(t, text = 'Sorry, too slow! You died').pack()
+        self.switch_frame(End)
 
 # initialize start location (foyer) and widgets
 
@@ -166,9 +223,15 @@ class Foyer(tk.Frame):
         photo = PIL.ImageTk.PhotoImage(im)
         screen = w.create_image((0,0), image = photo, anchor = 'nw')
         w.image = photo
-        
+        '''
+        hint = PIL.Image.open('hint_foyer.png')
+        hint = hint.resize((773,229))
+        hin = PIL.ImageTk.PhotoImage(hint)
+        h=tk.Label(w, image=hin)
+        h.pack()
+        '''
         door = tk.Button(self, text="Testing testing 1 2 3 ", #this is temporary for testing
-                   command=lambda: master.switch_frame(Troll))
+                   command=lambda: master.switch_frame(Click))
         door_window = w.create_window(500,300, window = door)
                    
         ex = PIL.Image.open('quit.png')
@@ -239,11 +302,19 @@ class Cage(tk.Frame):
         def have_key():
             key = True
             lock3["state"] = "normal"
-        
+         
+        def search_metal():
+            num = random.randint(1, 4)
+            if num==1:
+                have_key()
+                messagebox.showinfo("You found the key! Let's get out of here!")
+            else:
+                messagebox.showinfo("Sorry, you didn't find the key. Try again?")
+     
         metal = PIL.Image.open('metal.png')
         metal2 = PIL.ImageTk.PhotoImage(metal)
         metal3 = tk.Button(self, image = metal2, background = "#0a0907", borderwidth=0,
-                            command = lambda: have_key())
+                            command = lambda: search_metal()) #PROBABILITY
         metal3.image = metal2
         metal_window = w.create_window(310,540, window = metal3)
         
@@ -307,7 +378,7 @@ class Library(tk.Frame):
         kitchen_window = w.create_window(2, 350, window = kitchen, anchor  = 'nw')
 
         dungeon = tk.Button(self, background = "#783f04", borderwidth=0, relief = 'flat', width = 5, height = 9, 
-                   command=lambda: master.switch_frame(Dungeon))
+                   command=lambda: master.switch_frame(Troll))
         dungeon_window = w.create_window(900, 350, window = dungeon, anchor  = 'nw')  
         
         
@@ -362,11 +433,11 @@ class Kitchen(tk.Frame):
         inv.image = pack
         inv_window = w.create_window(850, 650, window = inv)
         
-        fridge = tk.Button(self, background = "#E7E8EA", borderwidth = 0, width = 11, height = 7, 
+        fridge = tk.Button(self, background = "#E7E8EA", borderwidth = 0, width = 15, height = 10, 
                             command = lambda: master.switch_frame(Refrigerator))
         fridge_window = w.create_window(187, 370, window = fridge, anchor = 'nw')
         
-        oven = tk.Button(self, background = "#E7E8EA", borderwidth = 0, width = 8, height = 1,
+        oven = tk.Button(self, background = "#E7E8EA", borderwidth = 0, width = 10, height = 3,
                             command = lambda: master.switch_frame(Oven))
         oven_window = w.create_window(480, 470, window = oven)
         
@@ -522,7 +593,7 @@ class Troll(tk.Frame):
         position = PIL.Image.open('map.png')
         position = position.resize((70,90))
         pos = PIL.ImageTk.PhotoImage(position)
-        loc = tk.Button(self, image = pos,background = "#6c614f", borderwidth=0,
+        loc = tk.Button(self, image = pos,background = "black", borderwidth=0,
                    command=lambda: master.show_map())
         loc.image = pos
         loc_window = w.create_window(70, 650, window = loc)
@@ -530,7 +601,7 @@ class Troll(tk.Frame):
         back = PIL.Image.open('backpack.png')
         back = back.resize((85,100))
         pack = PIL.ImageTk.PhotoImage(back)
-        inv = tk.Button(self, image = pack, background = "#6c614f", borderwidth=0,
+        inv = tk.Button(self, image = pack, background = "black", borderwidth=0,
                    command=lambda: master.show_inventory())
         inv.image = pack
         inv_window = w.create_window(850, 650, window = inv)
@@ -545,7 +616,7 @@ class Troll(tk.Frame):
                    command=lambda: master.trade())
         troll.image = h
         troll_window = w.create_window(337, 70, window = troll, anchor = 'nw')
-                                            
+                          
 # initialize Edit Logo screen and widgets        
 class Dungeon(tk.Frame):
     def __init__(self, master):
@@ -605,7 +676,7 @@ class Dungeon(tk.Frame):
         right = tk.Button(self, background = "#30302F", borderwidth=0, relief = 'flat', width = 9, height = 4, 
                    command=lambda: master.switch_frame(Library))
         right_window = w.create_window(721, 458, window = right, anchor  = 'nw')    
-        
+      
 class Dark(tk.Frame):
     def __init__(self, master):
         tk.Frame.__init__(self, master)
@@ -665,7 +736,31 @@ class Garden(tk.Frame):
         kitchen = tk.Button(self, background = "#502902", borderwidth=0, relief = 'flat', width = 5, height = 9, 
                    command=lambda: master.switch_frame(Kitchen))
         kitchen_window = w.create_window(875, 425, window = kitchen, anchor  = 'nw')   
-                  
+
+class Click(tk.Frame):
+    def __init__(self, master):
+        
+        tk.Frame.__init__(self, master)
+        tk.Label(self, text = 'Hit the witch!').pack()
+        tk.Label(self, text = '').pack()
+        tk.Label(self, text = 'Click on the witch as many times as you can!').pack()
+        tk.Label(self, text = '').pack()
+        tk.Label(self, text = '').pack()
+                
+        wit = PIL.Image.open('witch.png')
+        wid, hei = wit.size
+        wit = wit.resize((int(wid*.5), int(hei*.5)))
+        witch = PIL.ImageTk.PhotoImage(wit)
+        hag = tk.Button(self, image = witch, background = "#b9e2fb", borderwidth=0,
+                   command=lambda: count())
+        hag.image = witch
+        hag.pack()
+        
+        self.master.after(1000000000, master.win())
+        
+        def count():
+            num_clicks[0]+=1       
+                        
 class End(tk.Frame):
     def __init__(self, master):
         tk.Frame.__init__(self, master)
