@@ -10,6 +10,9 @@ from tkinter import messagebox
 import random
 
 inventory = {'hello':1, 'world': 2}
+num_stirs=[0]
+cauldron_items={}
+potion_ingredients={}
 
 '''
 first_vis contains boolean values for each room
@@ -502,6 +505,11 @@ class Kitchen(tk.Frame):
                    command=lambda: master.switch_frame(Pantry))
         cabinet.image = cab
         cabinet_window = w.create_window(509, 174, window = cabinet, anchor = 'nw')
+        
+        cauldron = tk.Button(self, image = clr,  background = "black", borderwidth = 0, width = 82, height = 65,
+                            command = lambda: master.switch_frame(Cauldron))
+        cauldron.image = clr
+        cauldron_window = w.create_window(657, 490, window = cauldron, anchor = 'nw')
             
         #doors
         garden = tk.Button(self, image = clr, background = "#783f04", borderwidth=0, relief = 'flat', width = 57, height = 250, 
@@ -892,6 +900,65 @@ class Garden(tk.Frame):
         kitchen_window = w.create_window(858, 432, window = kitchen, anchor  = 'nw')   
         
         first_vis[4]=False    
+
+
+class Cauldron(tk.Frame):
+    
+    def __init__(self, master):
+        tk.Frame.__init__(self, master)
+        w = tk.Canvas(self, width=960, height=720)
+        w.pack()
+        
+        im = PIL.Image.open('Cauldron.png')
+        photo = PIL.ImageTk.PhotoImage(im)
+        screen = w.create_image((0,0), image = photo, anchor = 'nw')
+        w.image = photo
+                
+        ex = PIL.Image.open('quit.png')
+        ex = ex.resize((100,100))
+        q = PIL.ImageTk.PhotoImage(ex)
+        quit = tk.Button(self, image = q, background = "#990000", borderwidth=0,
+                   command=lambda: master.switch_frame(Kitchen))
+        quit.image = q
+        quit_window = w.create_window(10, 70, window = quit, anchor  = 'nw')
+        
+        
+        position = PIL.Image.open('map.png')
+        position = position.resize((70,90))
+        pos = PIL.ImageTk.PhotoImage(position)
+        loc = tk.Button(self, image = pos,background = "#990000", borderwidth=0,
+                   command=lambda: master.show_map())
+        loc.image = pos
+        loc_window = w.create_window(70, 650, window = loc)
+        
+        back = PIL.Image.open('backpack.png')
+        back = back.resize((85,100))
+        pack = PIL.ImageTk.PhotoImage(back)
+        inv = tk.Button(self, image = pack, background = "#990000", borderwidth=0,
+                   command=lambda: master.show_inventory())
+        inv.image = pack
+        inv_window = w.create_window(850, 650, window = inv)
+        
+        top = PIL.Image.open('cauldronTop.png')
+        ctop = PIL.ImageTk.PhotoImage(top)
+        cauldronTop = tk.Button(self, image = ctop, background = "black", borderwidth=0,
+                   command=lambda: master.show_inventory())
+        cauldronTop.image = ctop
+        cauldronTop_window = w.create_window(480, 360, window = cauldronTop)
+        
+        def count_stirs():
+            num_stirs[0]+=1
+        
+        #def finish_potion():
+                
+        stir = tk.Button(self, text = 'Stir', 
+                   command=lambda: count_stirs())
+        stir_window = w.create_window(242, 145, window = stir, anchor  = 'nw')
+
+        finish = tk.Button(self, text = 'Finish potion', 
+                   command=lambda: count_stirs())
+        finish_window = w.create_window(242, 400, window = finish, anchor  = 'nw')
+        
 class End(tk.Frame):
     def __init__(self, master):
         tk.Frame.__init__(self, master)
