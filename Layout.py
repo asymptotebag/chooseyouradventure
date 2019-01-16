@@ -13,7 +13,7 @@ inventory = {'hello':1, 'sdkf':6, 'this': 10, 'testing':20}
 
 '''
 first_vis contains boolean values for each room
-    - order of first_vis is: Library, Dungeon, Kitchen, Pantry, Fridge, Garden
+    - order of first_vis is: Library, Troll, Dungeon, Kitchen, Garden
     - Foyer, Cage, and Oven are excluded because they are each only visited once
     - True means that the room has not been visited yet
     - False means that the room has already been visited
@@ -581,6 +581,14 @@ class Troll(tk.Frame):
         screen = w.create_image((0,0), image = photo, anchor = 'nw')
         w.image = photo
         
+        if first_vis[1]:
+            hint = PIL.Image.open('hint_troll.png')
+            hin = PIL.ImageTk.PhotoImage(hint)
+            hi = tk.Label(self, image = hin, background = "black")
+            hi.image = hin
+            hi_window = w.create_window(680, 100, window = hi, anchor  = 'nw')
+        
+        
         ex = PIL.Image.open('quit.png')
         ex = ex.resize((100,100))
         q = PIL.ImageTk.PhotoImage(ex)
@@ -616,7 +624,8 @@ class Troll(tk.Frame):
                    command=lambda: master.trade())
         troll.image = h
         troll_window = w.create_window(337, 70, window = troll, anchor = 'nw')
-                          
+        
+        first_vis[1]=False    
 # initialize Edit Logo screen and widgets        
 class Dungeon(tk.Frame):
     def __init__(self, master):
@@ -631,6 +640,14 @@ class Dungeon(tk.Frame):
         w.image = photo
         
                 
+        if first_vis[2]:
+            hint = PIL.Image.open('hint_dungeon.png')
+            hin = PIL.ImageTk.PhotoImage(hint)
+            hi = tk.Label(self, image = hin, background = "#1a0300")
+            hi.image = hin
+            hi_window = w.create_window(227, 17, window = hi, anchor  = 'nw')
+            
+                            
         ex = PIL.Image.open('quit.png')
         ex = ex.resize((100,100))
         q = PIL.ImageTk.PhotoImage(ex)
@@ -676,7 +693,8 @@ class Dungeon(tk.Frame):
         right = tk.Button(self, background = "#30302F", borderwidth=0, relief = 'flat', width = 9, height = 4, 
                    command=lambda: master.switch_frame(Library))
         right_window = w.create_window(721, 458, window = right, anchor  = 'nw')    
-      
+        
+        first_vis[2]=False
 class Dark(tk.Frame):
     def __init__(self, master):
         tk.Frame.__init__(self, master)
@@ -707,7 +725,7 @@ class Garden(tk.Frame):
         screen = w.create_image((0,0), image = photo, anchor = 'nw')
         w.image = photo
              
-        if first_vis[5]:
+        if first_vis[4]:
             hint = PIL.Image.open('hint_garden.png')
             hin = PIL.ImageTk.PhotoImage(hint)
             hi = tk.Label(self, image = hin, background = "#274e13")
@@ -742,7 +760,8 @@ class Garden(tk.Frame):
         kitchen = tk.Button(self, background = "#502902", borderwidth=0, relief = 'flat', width = 5, height = 9, 
                    command=lambda: master.switch_frame(Kitchen))
         kitchen_window = w.create_window(875, 425, window = kitchen, anchor  = 'nw')   
-                  
+        
+        first_vis[4]=False    
 class End(tk.Frame):
     def __init__(self, master):
         tk.Frame.__init__(self, master)
