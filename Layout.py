@@ -223,7 +223,7 @@ class Foyer(tk.Frame):
         h.pack()
         '''
         door = tk.Button(self, text="Testing testing 1 2 3 ", #this is temporary for testing
-                   command=lambda: master.switch_frame(Kitchen))
+                   command=lambda: master.switch_frame(Library))
         door_window = w.create_window(500,300, window = door)
                    
         ex = PIL.Image.open('quit.png')
@@ -388,8 +388,11 @@ class Library(tk.Frame):
                    command=lambda: master.hansel())
         red_window = w.create_window(431, 423, window = red, anchor  = 'nw')  
         
+        def read_error():
+            messagebox.showinfo(":(", "This book, \"The Crucible,\" is too blotched with tears to read!")
+        
         brown = tk.Button(self, background = "#895825", borderwidth=0, relief = 'flat', width = 2, height = 2, 
-                   command=lambda: master.switch_frame(Dungeon))
+                   command=lambda: read_error())
         brown_window = w.create_window(716, 361, window = brown, anchor  = 'nw')                      
        
         first_vis[0]=False                                                 
