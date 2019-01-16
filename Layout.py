@@ -62,10 +62,10 @@ class SampleApp(tk.Tk):
                 inventory[item] -= 1
             
             if trade:
-                messagebox.showinfo("Item \"" +item+"\" was successfully traded")
+                messagebox.showinfo("Confirmation","Item \"" +item+"\" was successfully traded")
                 self.switch_frame(Dungeon)
             else: 
-                messagebox.showinfo("Item \"" +item+"\" was successfully deleted")
+                messagebox.showinfo("Confirmation","Item \"" +item+"\" was successfully deleted")
             self.show_inventory()
         else:
             messagebox.showinfo("Error", "Item \"" +item+"\" does not exist in inventory")
@@ -299,9 +299,9 @@ class Cage(tk.Frame):
             num = random.randint(1, 4)
             if num==1:
                 have_key()
-                messagebox.showinfo("You found the key! Let's get out of here!")
+                messagebox.showinfo("Congratulations!","You found the key! Pick the lock and get out of here!")
             else:
-                messagebox.showinfo("Sorry, you didn't find the key. Try again?")
+                messagebox.showinfo("Sorry", "Oops, you didn't find the key. Wallow in self-pity or try again?")
      
         metal = PIL.Image.open('metal.png')
         metal2 = PIL.ImageTk.PhotoImage(metal)
