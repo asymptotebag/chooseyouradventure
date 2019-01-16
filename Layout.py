@@ -11,7 +11,7 @@ import random
 
 inventory = {'hello':1, 'world': 2}
 num_stirs=[0]
-cauldron_items={'ashes (1 tbsp)':8, 'curdled blood':1, "troll's hair":2, 'plastic plant leaves':10, 'tears':1,'paprika':1, 'black pepper':1}
+cauldron_items={}
 recipe={'ashes (1 tbsp)':8, 'curdled blood':1, "troll's hair":2, 'plastic plant leaves':10, 'tears':1,'paprika':1, 'black pepper':1}
 
 '''
