@@ -251,13 +251,19 @@ class Foyer(tk.Frame):
         inv.image = pack
         inv_window = w.create_window(850, 650, window = inv)
         
-        chu = tk.Button(self, background = "#89430c", borderwidth=0, relief = 'flat', width = 6, height = 8, 
-                   command=lambda: master.switch_frame(End))
-        chu_window = w.create_window(2, 370, window = chu, anchor  = 'nw')
+        clear = PIL.Image.open('clear.png')
+        clr = PIL.ImageTk.PhotoImage(clear)
         
-        candy = tk.Button(self, background = "#89430c", width =6, height = 8, borderwidth=0, relief = 'flat', padx=0,
+        chu = tk.Button(self, image= clr, background = "#89430c", borderwidth=0, relief = 'flat', width = 68, height = 225, 
+                   command=lambda: master.switch_frame(End))
+        chu.image = clr
+        chu_window = w.create_window(2, 356, window = chu, anchor  = 'nw')
+        
+        candy = tk.Button(self, image = clr, background = "#89430c", width =68, height = 225, borderwidth=0, relief = 'flat', padx=0,
                    command=lambda: master.switch_frame(Cage))
-        candy_window = w.create_window(890, 370, window = candy, anchor  = 'nw')
+        candy.image = clr
+        candy_window = w.create_window(888, 356, window = candy, anchor  = 'nw')
+        
 # initialize Edit Filter screen and widgets
 class Cage(tk.Frame):
     def __init__(self, master):
