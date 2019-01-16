@@ -401,26 +401,30 @@ class Library(tk.Frame):
         kitchen.image = clr
         kitchen_window = w.create_window(2, 338, window = kitchen, anchor  = 'nw')
 
-        dungeon = tk.Button(self, image = clr, background = "#783f04", borderwidth=0, relief = 'flat', width = 57, height = 250, 
+        dungeon = tk.Button(self, image = clr, background = "#783f04", borderwidth=0, relief = 'flat', width = 55, height = 248, 
                    command=lambda: master.switch_frame(Troll))
         dungeon.image = clr    
-        dungeon_window = w.create_window(898, 338, window = dungeon, anchor  = 'nw')  
+        dungeon_window = w.create_window(899, 338, window = dungeon, anchor  = 'nw')  
         
         
-        yellow = tk.Button(self, background = "#dfed09", borderwidth=0, relief = 'flat', width = 2, height = 2, 
+        yellow = tk.Button(self, image = clr, background = "#dfed09", borderwidth=0, relief = 'flat', width = 18, height = 40, 
                    command=lambda: master.potions())
-        yellow_window = w.create_window(660, 351, window = yellow, anchor  = 'nw')  
+        yellow.image=clr
+        yellow_window = w.create_window(661, 353, window = yellow, anchor  = 'nw')  
         
-        red = tk.Button(self, background = "#c02b5b", borderwidth=0, relief = 'flat', width = 9, height = 1, pady=0, 
+        red = tk.Button(self, image = clr, background = "#c02b5b", borderwidth=0, relief = 'flat', width = 63, height = 9, pady=0, 
                    command=lambda: master.hansel())
-        red_window = w.create_window(431, 423, window = red, anchor  = 'nw')  
+        red.image=clr
+        red_window = w.create_window(431, 425, window = red, anchor  = 'nw')  
         
         def read_error():
+            master.add_item('The Crucible')
             messagebox.showinfo(":(", "This book, \"The Crucible,\" is too blotched with tears to read!")
         
-        brown = tk.Button(self, background = "#895825", borderwidth=0, relief = 'flat', width = 2, height = 2, 
+        brown = tk.Button(self, image=clr, background = "#895825", borderwidth=0, relief = 'flat', width = 19, height = 38, 
                    command=lambda: read_error())
-        brown_window = w.create_window(716, 361, window = brown, anchor  = 'nw')                      
+        brown.image=clr
+        brown_window = w.create_window(716, 363, window = brown, anchor  = 'nw')                      
        
         first_vis[0]=False                                                 
 # initialize Kitchen screen and widgets
@@ -463,13 +467,19 @@ class Kitchen(tk.Frame):
         inv.image = pack
         inv_window = w.create_window(850, 650, window = inv)
         
-        fridge = tk.Button(self, background = "#E7E8EA", borderwidth = 0, width = 15, height = 10, 
-                            command = lambda: master.switch_frame(Refrigerator))
-        fridge_window = w.create_window(187, 370, window = fridge, anchor = 'nw')
         
-        oven = tk.Button(self, background = "#E7E8EA", borderwidth = 0, width = 10, height = 3,
+        clear = PIL.Image.open('clear.png')
+        clr = PIL.ImageTk.PhotoImage(clear)
+        
+        fridge = tk.Button(self, image = clr, background = "#E7E8EA", borderwidth = 0, width = 121, height = 185, 
+                            command = lambda: master.switch_frame(Refrigerator))
+        fridge.image = clr
+        fridge_window = w.create_window(188, 372, window = fridge, anchor = 'nw')
+        
+        oven = tk.Button(self, image = clr,  background = "#E7E8EA", borderwidth = 0, width = 90, height = 58,
                             command = lambda: master.switch_frame(Oven))
-        oven_window = w.create_window(480, 470, window = oven)
+        oven.image = clr
+        oven_window = w.create_window(432, 444, window = oven, anchor = 'nw')
         
         pantry = PIL.Image.open('cabinets.png')
         cab = PIL.ImageTk.PhotoImage(pantry)
@@ -478,14 +488,16 @@ class Kitchen(tk.Frame):
         cabinet.image = cab
         cabinet_window = w.create_window(509, 174, window = cabinet, anchor = 'nw')
             
-        #### REPLACE DOORS
-        garden = tk.Button(self, background = "#783f04", borderwidth=0, relief = 'flat', width = 5, height = 9, 
+        #doors
+        garden = tk.Button(self, image = clr, background = "#783f04", borderwidth=0, relief = 'flat', width = 57, height = 250, 
                    command=lambda: master.switch_frame(Garden))
-        garden_window = w.create_window(2, 350, window = garden, anchor  = 'nw')
+        garden.image = clr
+        garden_window = w.create_window(2, 338, window = garden, anchor  = 'nw')
 
-        library = tk.Button(self, background = "#783f04", borderwidth=0, relief = 'flat', width = 5, height = 9, 
+        library = tk.Button(self, image = clr, background = "#783f04", borderwidth=0, relief = 'flat', width = 55, height = 248, 
                    command=lambda: master.switch_frame(Library))
-        library_window = w.create_window(900, 350, window = library, anchor  = 'nw')  
+        library.image = clr
+        library_window = w.create_window(899, 338, window = library, anchor  = 'nw') 
          
 # initialize Edit Filter screen and widgets
 class Pantry(tk.Frame):
@@ -787,6 +799,18 @@ class Garden(tk.Frame):
         quit.image = q
         quit_window = w.create_window(10, 70, window = quit, anchor  = 'nw')
         
+        chooseshort = tk.Button(self, text = 'Choose Me',
+                   command=lambda: master.add_item("short leaves"))
+        chooseshort_window = w.create_window(160, 400, window = chooseshort)
+        chooseyellow = tk.Button(self, text = 'Choose Me',
+                   command=lambda: master.add_item("yellow flowers"))
+        chooseyellow_window = w.create_window(315, 363, window = chooseyellow)
+        choosepot = tk.Button(self, text = 'Choose Me',
+                   command=lambda: master.add_item("potted plant"))
+        choosepot_window = w.create_window(480, 190, window = choosepot)
+        choosetall = tk.Button(self, text = 'Choose Me',
+                   command=lambda: master.add_item("plastic plant leaves"))
+        choosetall_window = w.create_window(667, 225, window = choosetall)
         
         position = PIL.Image.open('map.png')
         position = position.resize((70,90))
