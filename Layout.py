@@ -886,7 +886,7 @@ class End(tk.Frame):
         tk.Frame.__init__(self, master)
         tk.Label(self, text = ' ').grid(row = 0, column = 0)
         tk.Label(self, text = ' ').grid(row = 1, column = 0)
-        tk.Label(self, text = "Thanks for playing! See you another time.").grid(row = 3, column = 0) ##   
+        tk.Label(self, text = "Quitting, are you? You would have died if it wasn't a game, you know?").grid(row = 3, column = 0) ##   
                                                                                                     
     
 if __name__ == "__main__":
