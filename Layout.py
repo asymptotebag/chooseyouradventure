@@ -9,7 +9,7 @@ import time
 from tkinter import messagebox
 import random
 
-inventory = {'hello':1, 'sdkf':6, 'this': 10, 'testing':20}
+inventory = {'hello':1, 'world': 2}
 
 '''
 first_vis contains boolean values for each room
@@ -80,6 +80,7 @@ class SampleApp(tk.Tk):
         label.image=ima
     
     def hansel(self):
+        self.add_item("Hansel and Gretel")
         t = tk.Toplevel(self)
         t.title('Hansel and Gretel')
         
@@ -87,6 +88,8 @@ class SampleApp(tk.Tk):
         ima = PIL.ImageTk.PhotoImage(im)
         label = tk.Label(t, image = ima).pack()
         label.image=ima
+        
+        
         
     def show_inventory(self):
         t = tk.Toplevel(self)
@@ -138,6 +141,7 @@ class SampleApp(tk.Tk):
                    
                                        
     def potions(self):
+        self.add_item("Potent Potions")
         t = tk.Toplevel(self)
         t.title('Potent Potions')
         
@@ -145,6 +149,8 @@ class SampleApp(tk.Tk):
         ima = PIL.ImageTk.PhotoImage(im)
         label = tk.Label(t, image = ima).pack()
         label.image=ima
+        
+        
 
 
 # initialize start location (foyer) and widgets
@@ -215,7 +221,13 @@ class Foyer(tk.Frame):
         photo = PIL.ImageTk.PhotoImage(im)
         screen = w.create_image((0,0), image = photo, anchor = 'nw')
         w.image = photo
-
+        '''
+        hint = PIL.Image.open('hint_foyer.png')
+        hint = hint.resize((773,229))
+        hin = PIL.ImageTk.PhotoImage(hint)
+        h=tk.Label(w, image=hin)
+        h.pack()
+        '''
         door = tk.Button(self, text="Testing testing 1 2 3 ", #this is temporary for testing
                    command=lambda: master.switch_frame(Library))
         door_window = w.create_window(500,300, window = door)
@@ -301,14 +313,22 @@ class Cage(tk.Frame):
                 have_key()
                 messagebox.showinfo("Congratulations!","You found the key! Pick the lock and get out of here!")
             else:
-                messagebox.showinfo("Sorry", "Oops, you didn't find the key. Wallow in self-pity or try again?")
-     
+                messagebox.showinfo("Sorry", "Oops, you didn't find the key. Wallow in self-pity or try again?")   
+        
         metal = PIL.Image.open('metal.png')
         metal2 = PIL.ImageTk.PhotoImage(metal)
         metal3 = tk.Button(self, image = metal2, background = "#0a0907", borderwidth=0,
                             command = lambda: search_metal()) #PROBABILITY
         metal3.image = metal2
         metal_window = w.create_window(310,540, window = metal3)
+        
+        fishie = PIL.Image.open('fish.png')
+        fishie = fishie.resize((50,50))
+        fishy = PIL.ImageTk.PhotoImage(fishie)
+        fish = tk.Button(self, image = fishy,background = "#0a0907", borderwidth=0,
+                   command=lambda: master.add_item("fish"))
+        fish.image = fishy
+        fish_window = w.create_window(100, 575, window = fish)
         
         position = PIL.Image.open('map.png')
         position = position.resize((70,90))
