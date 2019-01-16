@@ -9,7 +9,7 @@ import time
 from tkinter import messagebox
 import random
 
-inventory = {}
+inventory = {'hello':1, 'sdkf':6, 'this': 10, 'testing':20}
 
 '''
 rooms contains boolean values for each room
@@ -52,13 +52,18 @@ class SampleApp(tk.Tk):
         
     # remove item from inventory
     def remove_item(self, item):
+        item = item.lower()
+        item = item.strip()
+        
         if item in inventory:
             if inventory[item]==1:
                 del inventory[item]
             else:
                 inventory[item] -= 1
+            messagebox.showinfo("Item \"" +item+"\" was successfully deleted")
+            self.show_inventory()
         else:
-            messagebox.showinfo("Error", "Item does not exist in inventory")
+            messagebox.showinfo("Error", "Item \"" +item+"\" does not exist in inventory")
     
     def show_map(self):
         t = tk.Toplevel(self)
@@ -78,14 +83,30 @@ class SampleApp(tk.Tk):
         label = tk.Label(t, image = ima).pack()
         label.image=ima
         
-    def inventory(self):
+    def show_inventory(self):
         t = tk.Toplevel(self)
         t.title('Inventory')
         
         tk.Label(t, text = 'Item').grid(row=0, column = 0, padx= 20, pady=20)
         tk.Label(t, text = 'Quantity').grid(row=0, column=1, padx= 20, pady=20)
-                    
         
+        items = ''
+        quantities = ''
+        for i in inventory: 
+            items = items + i + '\n'
+            quantities = quantities + str(inventory[i]) +'\n'
+        tk.Label(t, text = items).grid(row=1, column = 0)
+        tk.Label(t, text = quantities).grid(row=1, column = 1)            
+        
+        tk.Label(t, text = '').grid(row = 2, column = 0, columnspan = 2)
+        
+        e=tk.Entry(t)
+        e.grid(row = 3, column = 0, columnspan = 2)
+        e.insert(0,'    item to delete')
+        
+        tk.Button(t, text = 'DELETE ITEM',
+                   command=lambda: self.remove_item(e.get())).grid(row = 4, column = 0, columnspan =  2)
+                   
     def potions(self):
         t = tk.Toplevel(self)
         t.title('Potent Potions')
