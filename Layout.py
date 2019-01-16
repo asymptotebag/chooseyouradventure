@@ -14,7 +14,8 @@ inventory = {'hello':1, 'sdkf':6, 'this': 10, 'testing':20}
 '''
 first_vis contains boolean values for each room
     - order of first_vis is: Library, Troll, Dungeon, Kitchen, Garden
-    - Foyer, Cage, and Oven are excluded because they are each only visited once
+    - 
+    , Cage, and Oven are excluded because they are each only visited once
     - True means that the room has not been visited yet
     - False means that the room has already been visited
 these values are used to determine whether or not to show a hint 
@@ -167,7 +168,7 @@ class Welcome(tk.Frame):
         pl = pl.resize((67,67))
         start = PIL.ImageTk.PhotoImage(pl)
         play = tk.Button(self, image = start,background = "#fe0000", borderwidth=0,
-                   command=lambda: master.switch_frame(Instructions))
+                   command=lambda: master.switch_frame(Dungeon))
         play.image = start
         play_window = w.create_window(740, 500, window = play)
 
@@ -634,6 +635,14 @@ class Troll(tk.Frame):
         troll.image = h
         troll_window = w.create_window(337, 70, window = troll, anchor = 'nw')
         
+        clear = PIL.Image.open('clear.png')
+        clr = PIL.ImageTk.PhotoImage(clear)
+        
+        library = tk.Button(self, image= clr, background = "#523e2f", borderwidth=0, relief = 'flat', width = 55, height = 250, 
+                   command=lambda: master.switch_frame(Library))
+        library.image = clr
+        library_window = w.create_window(2, 340, window = library, anchor  = 'nw')
+        
         first_vis[1]=False    
 # initialize Edit Logo screen and widgets        
 class Dungeon(tk.Frame):
@@ -681,10 +690,6 @@ class Dungeon(tk.Frame):
                    command=lambda: master.show_inventory())
         inv.image = pack
         inv_window = w.create_window(850, 650, window = inv)
-             
-        library = tk.Button(self, background = "#523e2f", borderwidth=0, relief = 'flat', width = 5, height = 9, 
-                   command=lambda: master.switch_frame(Library))
-        library_window = w.create_window(2, 350, window = library, anchor  = 'nw')
         
         
         left = tk.Button(self, background = "#5C5C5C", borderwidth=0, relief = 'flat', width =9, height = 4, 
@@ -701,7 +706,15 @@ class Dungeon(tk.Frame):
         
         right = tk.Button(self, background = "#30302F", borderwidth=0, relief = 'flat', width = 9, height = 4, 
                    command=lambda: master.switch_frame(Library))
-        right_window = w.create_window(721, 458, window = right, anchor  = 'nw')    
+        right_window = w.create_window(721, 458, window = right, anchor  = 'nw')
+        
+        clear = PIL.Image.open('clear.png')
+        clr = PIL.ImageTk.PhotoImage(clear)
+        
+        library = tk.Button(self, image= clr, background = "#523e2f", borderwidth=0, relief = 'flat', width = 55, height = 250, 
+                   command=lambda: master.switch_frame(Library))
+        library.image = clr
+        library_window = w.create_window(2, 340, window = library, anchor  = 'nw')   
         
         first_vis[2]=False
 class Dark(tk.Frame):
