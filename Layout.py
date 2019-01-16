@@ -51,7 +51,7 @@ class SampleApp(tk.Tk):
             messagebox.showinfo("Error","Too many items in inventory")
         
     # remove item from inventory
-    def remove_item(self, item):
+    def remove_item(self, item, trade = False):
         item = item.lower()
         item = item.strip()
         
@@ -60,7 +60,12 @@ class SampleApp(tk.Tk):
                 del inventory[item]
             else:
                 inventory[item] -= 1
-            messagebox.showinfo("Item \"" +item+"\" was successfully deleted")
+            
+            if trade:
+                messagebox.showinfo("Item \"" +item+"\" was successfully traded")
+                self.switch_frame(Dungeon)
+            else: 
+                messagebox.showinfo("Item \"" +item+"\" was successfully deleted")
             self.show_inventory()
         else:
             messagebox.showinfo("Error", "Item \"" +item+"\" does not exist in inventory")
@@ -106,7 +111,32 @@ class SampleApp(tk.Tk):
         
         tk.Button(t, text = 'DELETE ITEM',
                    command=lambda: self.remove_item(e.get())).grid(row = 4, column = 0, columnspan =  2)
+    
+    def trade(self):
+        t = tk.Toplevel(self)
+        t.title('Inventory')
+        
+        tk.Label(t, text = 'Item').grid(row=0, column = 0, padx= 20, pady=20)
+        tk.Label(t, text = 'Quantity').grid(row=0, column=1, padx= 20, pady=20)
+        
+        items = ''
+        quantities = ''
+        for i in inventory: 
+            items = items + i + '\n'
+            quantities = quantities + str(inventory[i]) +'\n'
+        tk.Label(t, text = items).grid(row=1, column = 0)
+        tk.Label(t, text = quantities).grid(row=1, column = 1)            
+        
+        tk.Label(t, text = '').grid(row = 2, column = 0, columnspan = 2)
+        
+        e=tk.Entry(t)
+        e.grid(row = 3, column = 0, columnspan = 2)
+        e.insert(0, 'trade item for entry')
+        
+        tk.Button(t, text = 'TRADE ITEM',
+                   command=lambda: self.remove_item(e.get(), True)).grid(row = 4, column = 0, columnspan =  2)
                    
+                                       
     def potions(self):
         t = tk.Toplevel(self)
         t.title('Potent Potions')
@@ -340,7 +370,7 @@ class Library(tk.Frame):
         kitchen_window = w.create_window(2, 350, window = kitchen, anchor  = 'nw')
 
         dungeon = tk.Button(self, background = "#783f04", borderwidth=0, relief = 'flat', width = 5, height = 9, 
-                   command=lambda: master.switch_frame(Dungeon))
+                   command=lambda: master.switch_frame(Troll))
         dungeon_window = w.create_window(900, 350, window = dungeon, anchor  = 'nw')  
         
         
@@ -531,7 +561,54 @@ class Oven(tk.Frame):
         inv.image = pack
         inv_window = w.create_window(850, 650, window = inv)
              
-                  
+class Troll(tk.Frame):
+    def __init__(self, master):
+        tk.Frame.__init__(self, master)
+                
+        w = tk.Canvas(self, width=960, height=720)
+        w.pack()
+        
+        im = PIL.Image.open('Troll.png')
+        photo = PIL.ImageTk.PhotoImage(im)
+        screen = w.create_image((0,0), image = photo, anchor = 'nw')
+        w.image = photo
+        
+        ex = PIL.Image.open('quit.png')
+        ex = ex.resize((100,100))
+        q = PIL.ImageTk.PhotoImage(ex)
+        quit = tk.Button(self, image = q, background = "#1a0300", borderwidth=0,
+                   command=lambda: master.switch_frame(End))
+        quit.image = q
+        quit_window = w.create_window(10, 70, window = quit, anchor  = 'nw')
+        
+        
+        position = PIL.Image.open('map.png')
+        position = position.resize((70,90))
+        pos = PIL.ImageTk.PhotoImage(position)
+        loc = tk.Button(self, image = pos,background = "black", borderwidth=0,
+                   command=lambda: master.show_map())
+        loc.image = pos
+        loc_window = w.create_window(70, 650, window = loc)
+        
+        back = PIL.Image.open('backpack.png')
+        back = back.resize((85,100))
+        pack = PIL.ImageTk.PhotoImage(back)
+        inv = tk.Button(self, image = pack, background = "black", borderwidth=0,
+                   command=lambda: master.show_inventory())
+        inv.image = pack
+        inv_window = w.create_window(850, 650, window = inv)
+             
+        library = tk.Button(self, background = "#523e2f", borderwidth=0, relief = 'flat', width = 5, height = 9, 
+                   command=lambda: master.switch_frame(Library))
+        library_window = w.create_window(2, 350, window = library, anchor  = 'nw')
+        
+        head = PIL.Image.open('head.png')
+        h = PIL.ImageTk.PhotoImage(head)
+        troll = tk.Button(self, image = h, background = "black", borderwidth=0,
+                   command=lambda: master.trade())
+        troll.image = h
+        troll_window = w.create_window(337, 70, window = troll, anchor = 'nw')
+                          
 # initialize Edit Logo screen and widgets        
 class Dungeon(tk.Frame):
     def __init__(self, master):
@@ -591,7 +668,7 @@ class Dungeon(tk.Frame):
         right = tk.Button(self, background = "#30302F", borderwidth=0, relief = 'flat', width = 9, height = 4, 
                    command=lambda: master.switch_frame(Library))
         right_window = w.create_window(721, 458, window = right, anchor  = 'nw')    
-        
+      
 class Dark(tk.Frame):
     def __init__(self, master):
         tk.Frame.__init__(self, master)
