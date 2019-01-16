@@ -9,10 +9,7 @@ import time
 from tkinter import messagebox
 import random
 
-#inventory
-bag = []
-
-#inventory = {}
+inventory = {}
 
 '''
 rooms contains boolean values for each room
@@ -41,35 +38,27 @@ class SampleApp(tk.Tk):
         
     # add item to inventory      
     def add_item(self, item):
-        if len(bag)<7:
-            bag.append(item)
-            messagebox.showinfo("Confirmation", str(item)+" has been added to inventory")
-        else: 
-            messagebox.showinfo("Error","Too many items in inventory")
-    
-    '''
-    def add_item(self, item):
-        total=0
-        for i in inventory: 
+        total = 0
+        for i in inventory:
             total = total + inventory[i]
-        
         if total<7:
-            if item in inventory:
-                inventory[item]=inventory[item]+1
+            if (str(item) in inventory):
+                inventory[item] += 1
             else:
-                inventory[item]=1
+                inventory[item] = 1
             messagebox.showinfo("Confirmation", str(item)+" has been added to inventory")
         else: 
             messagebox.showinfo("Error","Too many items in inventory")
-    '''
         
     # remove item from inventory
     def remove_item(self, item):
-        bag.remove(item)
-        
-    def show_inventory(self):
-        str_inventory = '\n'.join(bag)
-        messagebox.showinfo("Inventory",str_inventory)
+        if item in inventory:
+            if inventory[item]==1:
+                del inventory[item]
+            else:
+                inventory[item] -= 1
+        else:
+            messagebox.showinfo("Error", "Item does not exist in inventory")
     
     def show_map(self):
         t = tk.Toplevel(self)
@@ -88,7 +77,15 @@ class SampleApp(tk.Tk):
         ima = PIL.ImageTk.PhotoImage(im)
         label = tk.Label(t, image = ima).pack()
         label.image=ima
-    
+        
+    def inventory(self):
+        t = tk.Toplevel(self)
+        t.title('Inventory')
+        
+        tk.Label(t, text = 'Item').grid(row=0, column = 0, padx= 20, pady=20)
+        tk.Label(t, text = 'Quantity').grid(row=0, column=1, padx= 20, pady=20)
+                    
+        
     def potions(self):
         t = tk.Toplevel(self)
         t.title('Potent Potions')
