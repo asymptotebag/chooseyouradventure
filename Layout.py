@@ -794,6 +794,18 @@ class Garden(tk.Frame):
         quit.image = q
         quit_window = w.create_window(10, 70, window = quit, anchor  = 'nw')
         
+        chooseshort = tk.Button(self, text = 'Choose Me',
+                   command=lambda: master.add_item("short leaves"))
+        chooseshort_window = w.create_window(160, 400, window = chooseshort)
+        chooseyellow = tk.Button(self, text = 'Choose Me',
+                   command=lambda: master.add_item("yellow flowers"))
+        chooseyellow_window = w.create_window(315, 363, window = chooseyellow)
+        choosepot = tk.Button(self, text = 'Choose Me',
+                   command=lambda: master.add_item("potted plant"))
+        choosepot_window = w.create_window(480, 190, window = choosepot)
+        choosetall = tk.Button(self, text = 'Choose Me',
+                   command=lambda: master.add_item("plastic plant leaves"))
+        choosetall_window = w.create_window(667, 225, window = choosetall)
         
         position = PIL.Image.open('map.png')
         position = position.resize((70,90))
