@@ -12,15 +12,15 @@ import random
 inventory = {'hello':1, 'sdkf':6, 'this': 10, 'testing':20}
 
 '''
-rooms contains boolean values for each room
-    - order of rooms is: Library, Dungeon, Kitchen, Pantry, Fridge, Garden
+first_vis contains boolean values for each room
+    - order of first_vis is: Library, Dungeon, Kitchen, Pantry, Fridge, Garden
     - Foyer, Cage, and Oven are excluded because they are each only visited once
     - True means that the room has not been visited yet
     - False means that the room has already been visited
 these values are used to determine whether or not to show a hint 
 
 '''
-rooms = [True, True, True, True, True, True]
+first_vis = [True, True, True, True, True, True]
       
 class SampleApp(tk.Tk):
     def __init__(self):
@@ -340,7 +340,13 @@ class Library(tk.Frame):
         screen = w.create_image((0,0), image = photo, anchor = 'nw')
         w.image = photo
         
-                
+        if first_vis[0]:
+            hint = PIL.Image.open('hint_library.png')
+            hin = PIL.ImageTk.PhotoImage(hint)
+            hi = tk.Label(self, image = hin, background = "#7f735d")
+            hi.image = hin
+            hi_window = w.create_window(214, 550, window = hi, anchor  = 'nw')
+            
         ex = PIL.Image.open('quit.png')
         ex = ex.resize((100,100))
         q = PIL.ImageTk.PhotoImage(ex)
@@ -385,7 +391,8 @@ class Library(tk.Frame):
         brown = tk.Button(self, background = "#895825", borderwidth=0, relief = 'flat', width = 2, height = 2, 
                    command=lambda: master.switch_frame(Dungeon))
         brown_window = w.create_window(716, 361, window = brown, anchor  = 'nw')                      
-                                                              
+       
+        first_vis[0]=False                                                 
 # initialize Kitchen screen and widgets
 class Kitchen(tk.Frame):
     def __init__(self, master):
