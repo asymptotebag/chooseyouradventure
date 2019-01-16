@@ -371,13 +371,19 @@ class Library(tk.Frame):
         inv.image = pack
         inv_window = w.create_window(850, 650, window = inv)
              
-        kitchen = tk.Button(self, background = "#783f04", borderwidth=0, relief = 'flat', width = 5, height = 9, 
+             
+        clear = PIL.Image.open('clear.png')
+        clr = PIL.ImageTk.PhotoImage(clear)
+             
+        kitchen = tk.Button(self, image = clr, background = "#783f04", borderwidth=0, relief = 'flat', width = 57, height = 250, 
                    command=lambda: master.switch_frame(Kitchen))
-        kitchen_window = w.create_window(2, 350, window = kitchen, anchor  = 'nw')
+        kitchen.image = clr
+        kitchen_window = w.create_window(2, 338, window = kitchen, anchor  = 'nw')
 
-        dungeon = tk.Button(self, background = "#783f04", borderwidth=0, relief = 'flat', width = 5, height = 9, 
+        dungeon = tk.Button(self, image = clr, background = "#783f04", borderwidth=0, relief = 'flat', width = 57, height = 250, 
                    command=lambda: master.switch_frame(Troll))
-        dungeon_window = w.create_window(900, 350, window = dungeon, anchor  = 'nw')  
+        dungeon.image = clr    
+        dungeon_window = w.create_window(898, 338, window = dungeon, anchor  = 'nw')  
         
         
         yellow = tk.Button(self, background = "#dfed09", borderwidth=0, relief = 'flat', width = 2, height = 2, 
