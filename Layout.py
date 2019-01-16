@@ -215,13 +215,7 @@ class Foyer(tk.Frame):
         photo = PIL.ImageTk.PhotoImage(im)
         screen = w.create_image((0,0), image = photo, anchor = 'nw')
         w.image = photo
-        '''
-        hint = PIL.Image.open('hint_foyer.png')
-        hint = hint.resize((773,229))
-        hin = PIL.ImageTk.PhotoImage(hint)
-        h=tk.Label(w, image=hin)
-        h.pack()
-        '''
+
         door = tk.Button(self, text="Testing testing 1 2 3 ", #this is temporary for testing
                    command=lambda: master.switch_frame(Library))
         door_window = w.create_window(500,300, window = door)
