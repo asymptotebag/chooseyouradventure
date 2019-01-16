@@ -21,7 +21,7 @@ first_vis contains boolean values for each room
 these values are used to determine whether or not to show a hint 
 
 '''
-first_vis = [True, True, True, True, True, True]
+first_vis = [True, True, True, True, True]
       
 class SampleApp(tk.Tk):
     def __init__(self):
@@ -174,7 +174,7 @@ class Welcome(tk.Frame):
         pl = pl.resize((67,67))
         start = PIL.ImageTk.PhotoImage(pl)
         play = tk.Button(self, image = start,background = "#fe0000", borderwidth=0,
-                   command=lambda: master.switch_frame(Dungeon))
+                   command=lambda: master.switch_frame(Instructions))
         play.image = start
         play_window = w.create_window(740, 500, window = play)
 
@@ -395,9 +395,14 @@ class Library(tk.Frame):
              
         clear = PIL.Image.open('clear.png')
         clr = PIL.ImageTk.PhotoImage(clear)
-             
-        kitchen = tk.Button(self, image = clr, background = "#783f04", borderwidth=0, relief = 'flat', width = 57, height = 250, 
+        
+        if first_vis[3]:
+            kitchen = tk.Button(self, image = clr, background = "#783f04", borderwidth=0, relief = 'flat', width = 57, height = 250, 
+                   command=lambda: master.switch_frame(Dark))
+        else:
+            kitchen = tk.Button(self, image = clr, background = "#783f04", borderwidth=0, relief = 'flat', width = 57, height = 250, 
                    command=lambda: master.switch_frame(Kitchen))
+        
         kitchen.image = clr
         kitchen_window = w.create_window(2, 338, window = kitchen, anchor  = 'nw')
 
@@ -498,7 +503,9 @@ class Kitchen(tk.Frame):
                    command=lambda: master.switch_frame(Library))
         library.image = clr
         library_window = w.create_window(899, 338, window = library, anchor  = 'nw') 
-         
+        
+        first_vis[3]=False 
+        
 # initialize Edit Filter screen and widgets
 class Pantry(tk.Frame):
     def __init__(self, master):
@@ -761,8 +768,10 @@ class Dark(tk.Frame):
         black = dark.create_image((0,0), image = bg, anchor = 'nw')
         dark.image = bg
         
-        switch = tk.Button(self, text = 'CONGRATS ON FINDING \n THE LIGHT SWITCH', bg = 'black', bd = 0,
-                  command=lambda: master.switch_frame(Library))
+        messagebox.showinfo("Too Dark", "The next room is too dark to see in. Can you find the light switch on the wall?")
+        
+        switch = tk.Button(self, text = '                \n\n\n\n', bg = 'black', bd = 0,
+                  command=lambda: master.switch_frame(Kitchen))
         switch_window = dark.create_window(603, 450, window = switch, anchor  = 'nw')
 
     
