@@ -886,8 +886,30 @@ class End(tk.Frame):
         tk.Frame.__init__(self, master)
         tk.Label(self, text = ' ').grid(row = 0, column = 0)
         tk.Label(self, text = ' ').grid(row = 1, column = 0)
-        tk.Label(self, text = "Quitting, are you? You would have died if it wasn't a game, you know?").grid(row = 3, column = 0) ##   
-                                                                                                    
+        tk.Label(self, text = "Quitting, are you? You would have died if it wasn't a game, you know!").grid(row = 3, column = 0) ##   
+
+class Win(tk.Frame):
+    def __init__(self, master):
+        tk.Frame.__init__(self, master)
+        
+        w.pack()
+        
+        im = PIL.Image.open('win.jpg')
+        photo = PIL.ImageTk.PhotoImage(im)
+        screen = w.create_image((0,0), image = photo)
+        w.image = photo   
+
+class Lose(tk.Frame):
+    def __init__(self, master):
+        tk.Frame.__init__(self, master)
+        
+        w = tk.Canvas(self, width=960, height=720)
+        w.pack()
+        
+        im = PIL.Image.open('Garden.png')
+        photo = PIL.ImageTk.PhotoImage(im)
+        screen = w.create_image((0,0), image = photo, anchor = 'nw')
+        w.image = photo                                                                                                                                                                                                                                                                                                                                                                                                     
     
 if __name__ == "__main__":
     app = SampleApp()
