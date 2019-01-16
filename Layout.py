@@ -47,13 +47,13 @@ class SampleApp(tk.Tk):
                 inventory[item] += 1
             else:
                 inventory[item] = 1
-            messagebox.showinfo("Confirmation", str(item)+" has been added to inventory")
+            messagebox.showinfo("Item added", str(item)+" has been added to your backpack.")
         else: 
-            messagebox.showinfo("Error","Too many items in inventory")
+            messagebox.showinfo("Error","Backpack is full. Remove some items before adding more!")
         
     # remove item from inventory
     def remove_item(self, item, trade = False):
-        item = item.lower()
+        #item = item.lower()
         item = item.strip()
         
         if item in inventory:
@@ -63,13 +63,13 @@ class SampleApp(tk.Tk):
                 inventory[item] -= 1
             
             if trade:
-                messagebox.showinfo("Confirmation","Item \"" +item+"\" was successfully traded")
+                messagebox.showinfo("Trade Confirmed","Item \"" +item+"\" was successfully traded with the troll. You can now access the dungeon!")
                 self.switch_frame(Dungeon)
             else: 
-                messagebox.showinfo("Confirmation","Item \"" +item+"\" was successfully deleted")
+                messagebox.showinfo("Item Removed","Item \"" +item+"\" was removed from your backpack.")
             self.show_inventory()
         else:
-            messagebox.showinfo("Error", "Item \"" +item+"\" does not exist in inventory")
+            messagebox.showinfo("Error", "Item \"" +item+"\" is not in your backpack!")
     
     def show_map(self):
         t = tk.Toplevel(self)
@@ -111,12 +111,13 @@ class SampleApp(tk.Tk):
         
         e=tk.Entry(t)
         e.grid(row = 3, column = 0, columnspan = 2)
-        e.insert(0,'    item to delete')
+        e.insert(0,'item to delete')
         
         tk.Button(t, text = 'DELETE ITEM',
                    command=lambda: self.remove_item(e.get())).grid(row = 4, column = 0, columnspan =  2)
     
     def trade(self):
+        self.add_item("handful of troll hair")
         t = tk.Toplevel(self)
         t.title('Inventory')
         
@@ -724,7 +725,8 @@ class Troll(tk.Frame):
         library.image = clr
         library_window = w.create_window(2, 340, window = library, anchor  = 'nw')
         
-        first_vis[1]=False    
+        first_vis[1]=False
+                        
 # initialize Edit Logo screen and widgets        
 class Dungeon(tk.Frame):
     def __init__(self, master):
@@ -777,22 +779,22 @@ class Dungeon(tk.Frame):
         
         ##
         left = tk.Button(self, image = clr, background = "#5C5C5C", borderwidth=0, relief = 'flat', width =65, height = 75, 
-                   command=lambda: master.add_item("Bones"))
+                   command=lambda: master.add_item("bones"))
         left.image=clr
         left_window = w.create_window(229, 481, window = left, anchor  = 'nw')  
         
         midleft = tk.Button(self, image = clr, background = "#454545", borderwidth=0, relief = 'flat', width = 65, height = 75,
-                   command=lambda: master.add_item("Ashes"))
+                   command=lambda: master.add_item("ashes"))
         midleft.image=clr
         midleft_window = w.create_window(372, 454, window = midleft, anchor  = 'nw')  
         
         midright = tk.Button(self, image = clr, background = "#545253", borderwidth=0, relief = 'flat',width = 70, height = 75,
-                   command=lambda: master.add_item("Bones"))
+                   command=lambda: master.add_item("bones"))
         midright.image = clr
         midright_window = w.create_window(534, 478, window = midright, anchor  = 'nw')      
         
         right = tk.Button(self, image = clr, background = "#30302F", borderwidth=0, relief = 'flat', width = 65, height = 75, 
-                   command=lambda: master.add_item("Bones"))
+                   command=lambda: master.add_item("bones"))
         right.image = clr
         right_window = w.create_window(721, 458, window = right, anchor  = 'nw')
         ##
@@ -815,7 +817,7 @@ class Dark(tk.Frame):
         black = dark.create_image((0,0), image = bg, anchor = 'nw')
         dark.image = bg
         
-        messagebox.showinfo("Too Dark", "The next room is too dark to see in. Can you find the light switch on the wall?")
+        messagebox.showinfo("Kitchen", "The next room is too dark to see in. You need to find the light switch on the wall.")
         
         switch = tk.Button(self, text = '                \n\n\n\n', bg = 'black', bd = 0,
                   command=lambda: master.switch_frame(Kitchen))
