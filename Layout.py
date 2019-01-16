@@ -194,7 +194,7 @@ class Instructions(tk.Frame):
         w.image = photo
         
         cont = tk.Button(self, text = 'CONTINUE',
-                   command=lambda: master.switch_frame(Intro))
+                   command=lambda: master.switch_frame(Kitchen))
         cont_window = w.create_window(480, 600, window = cont)
         
 class Intro(tk.Frame):
@@ -495,6 +495,14 @@ class Kitchen(tk.Frame):
                             command = lambda: master.switch_frame(Oven))
         oven.image = clr
         oven_window = w.create_window(432, 444, window = oven, anchor = 'nw')
+        
+        # for after adding cauldron screen
+        """
+        cauldron = tk.Button(self, image = clr,  background = "#000000", borderwidth = 0, width = 85, height = 58,
+                            command = lambda: master.switch_frame(Cauldron))
+        cauldron.image = clr
+        cauldron_window = w.create_window(652, 490, window = cauldron, anchor = 'nw')
+        """
         
         pantry = PIL.Image.open('cabinets.png')
         cab = PIL.ImageTk.PhotoImage(pantry)
