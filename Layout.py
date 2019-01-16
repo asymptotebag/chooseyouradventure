@@ -11,8 +11,8 @@ import random
 
 inventory = {'hello':1, 'world': 2}
 num_stirs=[0]
-cauldron_items={}
-potion_ingredients={}
+cauldron_items={'ashes (1 tbsp)':8, 'curdled blood':1, "troll's hair":2, 'plastic plant leaves':10, 'tears':1,'paprika':1, 'black pepper':1}
+recipe={'ashes (1 tbsp)':8, 'curdled blood':1, "troll's hair":2, 'plastic plant leaves':10, 'tears':1,'paprika':1, 'black pepper':1}
 
 '''
 first_vis contains boolean values for each room
@@ -55,7 +55,7 @@ class SampleApp(tk.Tk):
             messagebox.showinfo("Error","Backpack is full. Remove some items before adding more!")
         
     # remove item from inventory
-    def remove_item(self, item, trade = False):
+    def remove_item(self, item, trade = False, cauld = False):
         #item = item.lower()
         item = item.strip()
         
@@ -70,6 +70,13 @@ class SampleApp(tk.Tk):
                 self.switch_frame(Dungeon)
                 if not item.islower():
                     self.add_item("handful of troll hair")
+            if cauld:
+                if (str(item) in cauldron_items):
+                    cauldron_items[item] += 1
+                else:
+                    cauldron_items[item] = 1
+                messagebox.showinfo("Confirmation","Item \"" +item+"\" was successfully added to the cauldron.")
+                self.show_cauldron()
             else: 
                 messagebox.showinfo("Item Removed","Item \"" +item+"\" was removed from your backpack.")
             self.show_inventory()
@@ -145,7 +152,47 @@ class SampleApp(tk.Tk):
         tk.Button(t, text = 'TRADE ITEM',
                    command=lambda: self.remove_item(e.get(), True)).grid(row = 4, column = 0, columnspan =  2)
                    
-                                       
+    def add_to_cauldron(self):
+        t = tk.Toplevel(self)
+        t.title('Cauldron')
+        
+        tk.Label(t, text = 'Item').grid(row=0, column = 0, padx= 20, pady=20)
+        tk.Label(t, text = 'Quantity').grid(row=0, column=1, padx= 20, pady=20)
+        
+        items = ''
+        quantities = ''
+        for i in inventory: 
+            items = items + i + '\n'
+            quantities = quantities + str(inventory[i]) +'\n'
+        tk.Label(t, text = items).grid(row=1, column = 0)
+        tk.Label(t, text = quantities).grid(row=1, column = 1)            
+        
+        tk.Label(t, text = '').grid(row = 2, column = 0, columnspan = 2)
+        
+        e=tk.Entry(t)
+        e.grid(row = 3, column = 0, columnspan = 2)
+        e.insert(0, 'add item to cauldron')
+        
+        tk.Button(t, text = 'ADD ITEM',
+                   command=lambda: self.remove_item(e.get(), False, True)).grid(row = 4, column = 0, columnspan =  2)
+       
+    def show_cauldron(self):
+        t = tk.Toplevel(self)
+        t.title('Cauldron')
+        
+        tk.Label(t, text = 'Item').grid(row=0, column = 0, padx= 20, pady=20)
+        tk.Label(t, text = 'Quantity').grid(row=0, column=1, padx= 20, pady=20)
+        
+        items = ''
+        quantities = ''
+        for i in cauldron_items: 
+            items = items + i + '\n'
+            quantities = quantities + str(cauldron_items[i]) +'\n'
+        tk.Label(t, text = items).grid(row=1, column = 0)
+        tk.Label(t, text = quantities).grid(row=1, column = 1)            
+        
+        tk.Label(t, text = '').grid(row = 2, column = 0, columnspan = 2)
+                                                                    
     def potions(self):
         self.add_item("Potent Potions")
         t = tk.Toplevel(self)
@@ -801,7 +848,7 @@ class Dungeon(tk.Frame):
         left_window = w.create_window(229, 481, window = left, anchor  = 'nw')  
         
         midleft = tk.Button(self, image = clr, background = "#454545", borderwidth=0, relief = 'flat', width = 65, height = 75,
-                   command=lambda: master.add_item("ashes"))
+                   command=lambda: master.add_item("ashes (1 tbsp)"))
         midleft.image=clr
         midleft_window = w.create_window(372, 454, window = midleft, anchor  = 'nw')  
         
@@ -950,22 +997,37 @@ class Cauldron(tk.Frame):
         top = PIL.Image.open('cauldronTop.png')
         ctop = PIL.ImageTk.PhotoImage(top)
         cauldronTop = tk.Button(self, image = ctop, background = "black", borderwidth=0,
-                   command=lambda: master.show_inventory())
+                   command=lambda: master.add_to_cauldron())
         cauldronTop.image = ctop
         cauldronTop_window = w.create_window(480, 360, window = cauldronTop)
         
         def count_stirs():
             num_stirs[0]+=1
         
-        #def finish_potion():
+        def finish_potion():
+            correct = True
+            for i in recipe:
+                if not (i in cauldron_items):
+                    correct = False
+                else:
+                    if not (cauldron_items[i]==recipe[i]):
+                        correct = False
+            
+            if not (num_stirs[0]==3):
+                correct=False
                 
+            if correct:
+                master.add_item('Draught for Ultimate Strength')
+            else: 
+                master.add_item('Draught of Ultimate Strength')
+    
         stir = tk.Button(self, text = 'Stir', 
                    command=lambda: count_stirs())
-        stir_window = w.create_window(242, 145, window = stir, anchor  = 'nw')
+        stir_window = w.create_window(840, 145, window = stir, anchor  = 'nw')
 
         finish = tk.Button(self, text = 'Finish potion', 
-                   command=lambda: count_stirs())
-        finish_window = w.create_window(242, 400, window = finish, anchor  = 'nw')
+                   command=lambda: finish_potion())
+        finish_window = w.create_window(480, 640, window = finish)
         
 class End(tk.Frame):
     def __init__(self, master):
