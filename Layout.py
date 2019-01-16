@@ -857,9 +857,14 @@ class Garden(tk.Frame):
         inv.image = pack
         inv_window = w.create_window(850, 650, window = inv)
              
-        kitchen = tk.Button(self, background = "#502902", borderwidth=0, relief = 'flat', width = 5, height = 9, 
+        
+        clear = PIL.Image.open('clear.png')
+        clr = PIL.ImageTk.PhotoImage(clear)
+
+        kitchen = tk.Button(self, image = clr, background = "#502902", borderwidth=0, relief = 'flat', width = 58, height = 130, 
                    command=lambda: master.switch_frame(Kitchen))
-        kitchen_window = w.create_window(875, 425, window = kitchen, anchor  = 'nw')   
+        kitchen.image = clr
+        kitchen_window = w.create_window(858, 432, window = kitchen, anchor  = 'nw')   
         
         first_vis[4]=False    
 class End(tk.Frame):
