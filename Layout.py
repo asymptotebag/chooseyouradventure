@@ -600,6 +600,20 @@ class Refrigerator(tk.Frame):
                    command=lambda: master.show_inventory())
         inv.image = pack
         inv_window = w.create_window(850, 650, window = inv)
+        
+        
+        milk = tk.Button(self, text = 'Choose Me', 
+                   command=lambda: master.add_item('milk'))
+        milk_window = w.create_window(242, 145, window = milk)
+        
+        cheese = tk.Button(self, text = 'Choose Me', 
+                   command=lambda: master.add_item('cheese'))
+        cheese_window = w.create_window(478, 300, window = cheese)
+        
+        blood = tk.Button(self, text = 'Choose Me', 
+                   command=lambda: master.add_item('curdled blood'))
+        blood_window = w.create_window(695, 185, window = blood)
+        
                 
 class Oven(tk.Frame):
     def __init__(self, master):
