@@ -406,20 +406,24 @@ class Library(tk.Frame):
         dungeon_window = w.create_window(898, 338, window = dungeon, anchor  = 'nw')  
         
         
-        yellow = tk.Button(self, background = "#dfed09", borderwidth=0, relief = 'flat', width = 2, height = 2, 
+        yellow = tk.Button(self, image = clr, background = "#dfed09", borderwidth=0, relief = 'flat', width = 18, height = 40, 
                    command=lambda: master.potions())
-        yellow_window = w.create_window(660, 351, window = yellow, anchor  = 'nw')  
+        yellow.image=clr
+        yellow_window = w.create_window(661, 353, window = yellow, anchor  = 'nw')  
         
-        red = tk.Button(self, background = "#c02b5b", borderwidth=0, relief = 'flat', width = 9, height = 1, pady=0, 
+        red = tk.Button(self, image = clr, background = "#c02b5b", borderwidth=0, relief = 'flat', width = 63, height = 9, pady=0, 
                    command=lambda: master.hansel())
-        red_window = w.create_window(431, 423, window = red, anchor  = 'nw')  
+        red.image=clr
+        red_window = w.create_window(431, 425, window = red, anchor  = 'nw')  
         
         def read_error():
+            master.add_item('The Crucible')
             messagebox.showinfo(":(", "This book, \"The Crucible,\" is too blotched with tears to read!")
         
-        brown = tk.Button(self, background = "#895825", borderwidth=0, relief = 'flat', width = 2, height = 2, 
+        brown = tk.Button(self, image=clr, background = "#895825", borderwidth=0, relief = 'flat', width = 19, height = 38, 
                    command=lambda: read_error())
-        brown_window = w.create_window(716, 361, window = brown, anchor  = 'nw')                      
+        brown.image=clr
+        brown_window = w.create_window(716, 363, window = brown, anchor  = 'nw')                      
        
         first_vis[0]=False                                                 
 # initialize Kitchen screen and widgets
