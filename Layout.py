@@ -65,6 +65,8 @@ class SampleApp(tk.Tk):
             if trade:
                 messagebox.showinfo("Trade Confirmed","Item \"" +item+"\" was successfully traded with the troll. You can now access the dungeon!")
                 self.switch_frame(Dungeon)
+                if not item.islower():
+                    self.add_item("handful of troll hair")
             else: 
                 messagebox.showinfo("Item Removed","Item \"" +item+"\" was removed from your backpack.")
             self.show_inventory()
@@ -117,7 +119,6 @@ class SampleApp(tk.Tk):
                    command=lambda: self.remove_item(e.get())).grid(row = 4, column = 0, columnspan =  2)
     
     def trade(self):
-        self.add_item("handful of troll hair")
         t = tk.Toplevel(self)
         t.title('Inventory')
         
