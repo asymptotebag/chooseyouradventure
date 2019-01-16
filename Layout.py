@@ -961,11 +961,11 @@ class Cauldron(tk.Frame):
                 
         stir = tk.Button(self, text = 'Stir', 
                    command=lambda: count_stirs())
-        stir_window = w.create_window(242, 145, window = stir, anchor  = 'nw')
+        stir_window = w.create_window(480, 85, window = stir)
 
-        finish = tk.Button(self, text = 'Finish potion', 
+        finish = tk.Button(self, text = 'Finish Potion', 
                    command=lambda: count_stirs())
-        finish_window = w.create_window(242, 400, window = finish, anchor  = 'nw')
+        finish_window = w.create_window(480, 650, window = finish)
         
 class End(tk.Frame):
     def __init__(self, master):
