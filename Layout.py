@@ -683,7 +683,7 @@ class Dungeon(tk.Frame):
             hin = PIL.ImageTk.PhotoImage(hint)
             hi = tk.Label(self, image = hin, background = "#1a0300")
             hi.image = hin
-            hi_window = w.create_window(227, 17, window = hi, anchor  = 'nw')
+            hi_window = w.create_window(480,80, window = hi)
             
                             
         ex = PIL.Image.open('quit.png')
@@ -711,25 +711,30 @@ class Dungeon(tk.Frame):
         inv.image = pack
         inv_window = w.create_window(850, 650, window = inv)
         
-        
-        left = tk.Button(self, background = "#5C5C5C", borderwidth=0, relief = 'flat', width =9, height = 4, 
-                   command=lambda: master.switch_frame(Library))
-        left_window = w.create_window(229, 481, window = left, anchor  = 'nw')  
-        
-        midleft = tk.Button(self, background = "#454545", borderwidth=0, relief = 'flat', width = 9, height = 4,
-                   command=lambda: master.switch_frame(Library))
-        midleft_window = w.create_window(372, 454, window = midleft, anchor  = 'nw')  
-        
-        midright = tk.Button(self, background = "#545253", borderwidth=0, relief = 'flat', width = 9, height = 4, 
-                   command=lambda: master.switch_frame(Library))
-        midright_window = w.create_window(534, 478, window = midright, anchor  = 'nw')      
-        
-        right = tk.Button(self, background = "#30302F", borderwidth=0, relief = 'flat', width = 9, height = 4, 
-                   command=lambda: master.switch_frame(Library))
-        right_window = w.create_window(721, 458, window = right, anchor  = 'nw')
-        
         clear = PIL.Image.open('clear.png')
         clr = PIL.ImageTk.PhotoImage(clear)
+        
+        ##
+        left = tk.Button(self, image = clr, background = "#5C5C5C", borderwidth=0, relief = 'flat', width =65, height = 75, 
+                   command=lambda: master.add_item("Bones"))
+        left.image=clr
+        left_window = w.create_window(229, 481, window = left, anchor  = 'nw')  
+        
+        midleft = tk.Button(self, image = clr, background = "#454545", borderwidth=0, relief = 'flat', width = 65, height = 75,
+                   command=lambda: master.add_item("Ashes"))
+        midleft.image=clr
+        midleft_window = w.create_window(372, 454, window = midleft, anchor  = 'nw')  
+        
+        midright = tk.Button(self, image = clr, background = "#545253", borderwidth=0, relief = 'flat',width = 70, height = 75,
+                   command=lambda: master.add_item("Bones"))
+        midright.image = clr
+        midright_window = w.create_window(534, 478, window = midright, anchor  = 'nw')      
+        
+        right = tk.Button(self, image = clr, background = "#30302F", borderwidth=0, relief = 'flat', width = 65, height = 75, 
+                   command=lambda: master.add_item("Bones"))
+        right.image = clr
+        right_window = w.create_window(721, 458, window = right, anchor  = 'nw')
+        ##
         
         library = tk.Button(self, image= clr, background = "#523e2f", borderwidth=0, relief = 'flat', width = 55, height = 250, 
                    command=lambda: master.switch_frame(Library))
