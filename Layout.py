@@ -648,7 +648,7 @@ class Pantry(tk.Frame):
         screen = w.create_image((0,0), image = photo, anchor = 'nw')
         w.image = photo
         
-        #exit game        
+        #exit Pantry (return to Kitchen)       
         ex = PIL.Image.open('quit.png')
         ex = ex.resize((100,100))
         q = PIL.ImageTk.PhotoImage(ex)
@@ -710,7 +710,7 @@ class Refrigerator(tk.Frame):
         screen = w.create_image((0,0), image = photo, anchor = 'nw')
         w.image = photo
         
-        #exit screen        
+        #exit Refrigerator (return to Kitchen)     
         ex = PIL.Image.open('quit.png')
         ex = ex.resize((100,100))
         q = PIL.ImageTk.PhotoImage(ex)
@@ -764,7 +764,7 @@ class Oven(tk.Frame):
         screen = w.create_image((0,0), image = photo, anchor = 'nw')
         w.image = photo
         
-        #exit game                
+        #exit game               
         ex = PIL.Image.open('quit.png')
         ex = ex.resize((100,100))
         q = PIL.ImageTk.PhotoImage(ex)
@@ -875,7 +875,7 @@ class Dungeon(tk.Frame):
         screen = w.create_image((0,0), image = photo, anchor = 'nw')
         w.image = photo
         
-                
+        #if this is the first visit, display hint        
         if first_vis[2]:
             hint = PIL.Image.open('hint_dungeon.png')
             hin = PIL.ImageTk.PhotoImage(hint)
@@ -883,7 +883,7 @@ class Dungeon(tk.Frame):
             hi.image = hin
             hi_window = w.create_window(480,80, window = hi)
             
-                            
+        #exit game                    
         ex = PIL.Image.open('quit.png')
         ex = ex.resize((100,100))
         q = PIL.ImageTk.PhotoImage(ex)
@@ -892,7 +892,7 @@ class Dungeon(tk.Frame):
         quit.image = q
         quit_window = w.create_window(10, 70, window = quit, anchor  = 'nw')
         
-        
+        #view map
         position = PIL.Image.open('map.png')
         position = position.resize((70,90))
         pos = PIL.ImageTk.PhotoImage(position)
@@ -901,6 +901,7 @@ class Dungeon(tk.Frame):
         loc.image = pos
         loc_window = w.create_window(70, 650, window = loc)
         
+        #view inventory
         back = PIL.Image.open('backpack.png')
         back = back.resize((85,100))
         pack = PIL.ImageTk.PhotoImage(back)
@@ -909,10 +910,11 @@ class Dungeon(tk.Frame):
         inv.image = pack
         inv_window = w.create_window(850, 650, window = inv)
         
+        #add to button so sizes are in pixels
         clear = PIL.Image.open('clear.png')
         clr = PIL.ImageTk.PhotoImage(clear)
         
-        ##
+        #buttons to add bones or ashes to inventory when graves are clicked (all are bones except midleft, which is ashes)
         left = tk.Button(self, image = clr, background = "#5C5C5C", borderwidth=0, relief = 'flat', width =65, height = 75, 
                    command=lambda: master.add_item("bones"))
         left.image=clr
@@ -932,18 +934,23 @@ class Dungeon(tk.Frame):
                    command=lambda: master.add_item("bones"))
         right.image = clr
         right_window = w.create_window(721, 458, window = right, anchor  = 'nw')
-        ##
         
+        #return to library        
         library = tk.Button(self, image= clr, background = "#523e2f", borderwidth=0, relief = 'flat', width = 55, height = 250, 
                    command=lambda: master.switch_frame(Library))
         library.image = clr
         library_window = w.create_window(2, 340, window = library, anchor  = 'nw')   
         
+        #set first_vis value for Dungeon to False
         first_vis[2]=False
+
+#intialize Dark screen and widgets 
+#must locate black button (light switch) to progress to Kitchen     
 class Dark(tk.Frame):
     def __init__(self, master):
         tk.Frame.__init__(self, master)
-                
+        
+        #set up canvas and background    
         dark = tk.Canvas(self, width=960, height=720)
         dark.pack()
         
@@ -952,18 +959,21 @@ class Dark(tk.Frame):
         black = dark.create_image((0,0), image = bg, anchor = 'nw')
         dark.image = bg
         
+        #show message that the room is too dark to see in
         messagebox.showinfo("Kitchen", "The next room is too dark to see in. You need to find the light switch on the wall.")
         
+        #switch: click to enter Kitchen
         switch = tk.Button(self, text = '                \n\n\n\n', bg = 'black', bd = 0,
                   command=lambda: master.switch_frame(Kitchen))
         switch_window = dark.create_window(603, 450, window = switch, anchor  = 'nw')
 
     
-# initialize Garden screen                                                                                                                                                              
+# initialize Garden screen and widgets                                                                                                                                                              
 class Garden(tk.Frame):
     def __init__(self, master):
         tk.Frame.__init__(self, master)
         
+        #set up canvas and background
         w = tk.Canvas(self, width=960, height=720)
         w.pack()
         
@@ -971,14 +981,16 @@ class Garden(tk.Frame):
         photo = PIL.ImageTk.PhotoImage(im)
         screen = w.create_image((0,0), image = photo, anchor = 'nw')
         w.image = photo
-             
+       
+        #if this is the first visit, display hint   
         if first_vis[4]:
             hint = PIL.Image.open('hint_garden.png')
             hin = PIL.ImageTk.PhotoImage(hint)
             hi = tk.Label(self, image = hin, background = "#274e13")
             hi.image = hin
             hi_window = w.create_window(233, 581, window = hi, anchor  = 'nw')
-                    
+         
+        #exit game           
         ex = PIL.Image.open('quit.png')
         ex = ex.resize((100,100))
         q = PIL.ImageTk.PhotoImage(ex)
@@ -987,6 +999,26 @@ class Garden(tk.Frame):
         quit.image = q
         quit_window = w.create_window(10, 70, window = quit, anchor  = 'nw')
         
+        #view map
+        position = PIL.Image.open('map.png')
+        position = position.resize((70,90))
+        pos = PIL.ImageTk.PhotoImage(position)
+        loc = tk.Button(self, image = pos,background = "#274e13", borderwidth=0,
+                   command=lambda: master.show_map())
+        loc.image = pos
+        loc_window = w.create_window(70, 650, window = loc)
+        
+        #view bag
+        back = PIL.Image.open('backpack.png')
+        back = back.resize((85,100))
+        pack = PIL.ImageTk.PhotoImage(back)
+        inv = tk.Button(self, image = pack, background = "#274e13", borderwidth=0,
+                   command=lambda: master.show_inventory())
+        inv.image = pack
+        inv_window = w.create_window(850, 650, window = inv)
+        
+        
+        #buttons to add plant leaves to inventory
         chooseshort = tk.Button(self, text = 'Choose Me',
                    command=lambda: master.add_item("short leaves"))
         chooseshort_window = w.create_window(160, 400, window = chooseshort)
@@ -1000,38 +1032,26 @@ class Garden(tk.Frame):
                    command=lambda: master.add_item("plastic plant leaves"))
         choosetall_window = w.create_window(667, 225, window = choosetall)
         
-        position = PIL.Image.open('map.png')
-        position = position.resize((70,90))
-        pos = PIL.ImageTk.PhotoImage(position)
-        loc = tk.Button(self, image = pos,background = "#274e13", borderwidth=0,
-                   command=lambda: master.show_map())
-        loc.image = pos
-        loc_window = w.create_window(70, 650, window = loc)
-        
-        back = PIL.Image.open('backpack.png')
-        back = back.resize((85,100))
-        pack = PIL.ImageTk.PhotoImage(back)
-        inv = tk.Button(self, image = pack, background = "#274e13", borderwidth=0,
-                   command=lambda: master.show_inventory())
-        inv.image = pack
-        inv_window = w.create_window(850, 650, window = inv)
-             
-        
+        #add to button so size is in pixels
         clear = PIL.Image.open('clear.png')
         clr = PIL.ImageTk.PhotoImage(clear)
-
+        
+        #return to kitchen
         kitchen = tk.Button(self, image = clr, background = "#502902", borderwidth=0, relief = 'flat', width = 58, height = 130, 
                    command=lambda: master.switch_frame(Kitchen))
         kitchen.image = clr
         kitchen_window = w.create_window(858, 432, window = kitchen, anchor  = 'nw')   
         
+        #set first_vis value for Garden to False
         first_vis[4]=False    
 
-
+#initialize Cauldron screen and widgets
 class Cauldron(tk.Frame):
     
     def __init__(self, master):
         tk.Frame.__init__(self, master)
+        
+        #set up canvas and background
         w = tk.Canvas(self, width=960, height=720)
         w.pack()
         
@@ -1039,7 +1059,8 @@ class Cauldron(tk.Frame):
         photo = PIL.ImageTk.PhotoImage(im)
         screen = w.create_image((0,0), image = photo, anchor = 'nw')
         w.image = photo
-                
+           
+        #exit game     
         ex = PIL.Image.open('quit.png')
         ex = ex.resize((100,100))
         q = PIL.ImageTk.PhotoImage(ex)
@@ -1048,7 +1069,7 @@ class Cauldron(tk.Frame):
         quit.image = q
         quit_window = w.create_window(10, 70, window = quit, anchor  = 'nw')
         
-        
+        #view map
         position = PIL.Image.open('map.png')
         position = position.resize((70,90))
         pos = PIL.ImageTk.PhotoImage(position)
@@ -1057,6 +1078,7 @@ class Cauldron(tk.Frame):
         loc.image = pos
         loc_window = w.create_window(70, 650, window = loc)
         
+        #view inventory
         back = PIL.Image.open('backpack.png')
         back = back.resize((85,100))
         pack = PIL.ImageTk.PhotoImage(back)
@@ -1065,6 +1087,7 @@ class Cauldron(tk.Frame):
         inv.image = pack
         inv_window = w.create_window(850, 650, window = inv)
         
+        #click on top of cauldron to add items to the cauldron
         top = PIL.Image.open('cauldronTop.png')
         ctop = PIL.ImageTk.PhotoImage(top)
         cauldronTop = tk.Button(self, image = ctop, background = "black", borderwidth=0,
@@ -1072,9 +1095,11 @@ class Cauldron(tk.Frame):
         cauldronTop.image = ctop
         cauldronTop_window = w.create_window(480, 360, window = cauldronTop)
         
+        #count the number of stirs (add 1)
         def count_stirs():
             num_stirs[0]+=1
         
+        #determine whether or not the completed potion is correct
         def finish_potion():
             correct = True
             for i in recipe:
@@ -1091,15 +1116,18 @@ class Cauldron(tk.Frame):
                 master.add_item('Draught for Ultimate Strength')
             else: 
                 master.add_item('Draught of Ultimate Strength')
-    
+        
+        #button to stir
         stir = tk.Button(self, text = 'Stir', 
                    command=lambda: count_stirs())
         stir_window = w.create_window(840, 145, window = stir, anchor  = 'nw')
-
+        
+        #finish the potion
         finish = tk.Button(self, text = 'Finish potion', 
                    command=lambda: finish_potion())
         finish_window = w.create_window(480, 640, window = finish)
-        
+
+#initialize End screen and widgets      
 class End(tk.Frame):
     def __init__(self, master):
         tk.Frame.__init__(self, master)
@@ -1107,10 +1135,11 @@ class End(tk.Frame):
         tk.Label(self, text = ' ').grid(row = 1, column = 0)
         tk.Label(self, text = "Quitting, are you? You would have died if it wasn't a game, you know!").grid(row = 3, column = 0) ##   
 
+#intialize winning screen and widgets
 class Win(tk.Frame):
     def __init__(self, master):
         tk.Frame.__init__(self, master)
-        
+        w = tk.Canvas(self, width=960, height=720)
         w.pack()
         
         im = PIL.Image.open('win.jpg')
@@ -1118,6 +1147,7 @@ class Win(tk.Frame):
         screen = w.create_image((0,0), image = photo)
         w.image = photo   
 
+#initialize losing screen and widgets
 class Lose(tk.Frame):
     def __init__(self, master):
         tk.Frame.__init__(self, master)
