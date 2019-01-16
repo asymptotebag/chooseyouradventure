@@ -536,7 +536,27 @@ class Pantry(tk.Frame):
                    command=lambda: master.show_inventory())
         inv.image = pack
         inv_window = w.create_window(850, 650, window = inv)
-
+        
+        garlic = tk.Button(self, text = 'Choose Me', 
+                   command=lambda: master.add_item('garlic'))
+        garlic_window = w.create_window(242, 145, window = garlic, anchor  = 'nw')
+        
+        paprika = tk.Button(self, text = 'Choose Me', 
+                   command=lambda: master.add_item('paprika'))
+        paprika_window = w.create_window(440, 120, window = paprika, anchor  = 'nw')
+        
+        anise = tk.Button(self, text = 'Choose Me', 
+                   command=lambda: master.add_item('anise'))
+        anise_window = w.create_window(715, 103, window = anise, anchor  = 'nw')
+        
+        cinn = tk.Button(self, text = 'Choose Me', 
+                   command=lambda: master.add_item('cinnamon'))
+        cinn_window = w.create_window(285, 400, window = cinn, anchor  = 'nw')
+        
+        black = tk.Button(self, text = 'Choose Me', 
+                   command=lambda: master.add_item('black pepper'))
+        black_window = w.create_window(577, 388, window = black, anchor  = 'nw')
+        
 class Refrigerator(tk.Frame):
     def __init__(self, master):
         tk.Frame.__init__(self, master)
