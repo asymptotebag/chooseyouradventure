@@ -346,7 +346,15 @@ class Cage(tk.Frame):
                    command=lambda: master.show_inventory())
         inv.image = pack
         inv_window = w.create_window(850, 650, window = inv)
-                        
+        
+        cr = PIL.Image.open('cry.png')
+        cr = cr.resize((50,50))
+        c = PIL.ImageTk.PhotoImage(cr)
+        cry = tk.Button(self, image = c, background = "#7f735d", borderwidth=0,
+                   command=lambda: master.add_item('tears'))
+        cry.image = c
+        cry_window = w.create_window(200,300 , window = cry)
+                
 # prompted by Open Image button
 class Library(tk.Frame):
     def __init__(self, master):
