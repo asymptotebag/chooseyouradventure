@@ -52,13 +52,14 @@ class SampleApp(tk.Tk):
         total = 0
         for i in inventory:
             total = total + inventory[i]
-        if total<7:
+        if total<15: #max amount is 15
             if (str(item) in inventory):
                 inventory[item] += 1
             else:
                 inventory[item] = 1
+            #message for successful addition
             messagebox.showinfo("Item added", str(item)+" has been added to your backpack.")
-        else: 
+        else: #message if backpack is full
             messagebox.showinfo("Error","Backpack is full. Remove some items before adding more!")
         
     # remove item from inventory
