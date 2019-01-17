@@ -1096,9 +1096,13 @@ class Cauldron(tk.Frame):
                 master.add_item('Draught of Ultimate Strength')
         
         #button to stir
-        stir = tk.Button(self, text = 'Stir', 
+        stir = PIL.Image.open('spoon.png')
+        stir = stir.resize((50,200))
+        stir2 = PIL.ImageTk.PhotoImage(stir)
+        stir3 = tk.Button(self, image = stir2, background = "#990000", borderwidth=0,
                    command=lambda: count_stirs())
-        stir_window = w.create_window(840, 145, window = stir, anchor  = 'nw')
+        stir3.image = stir2
+        stir3_window = w.create_window(870, 200, window = stir3)
         
         #finish the potion
         finish = tk.Button(self, text = 'Finish potion', 
