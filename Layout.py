@@ -276,7 +276,7 @@ class Instructions(tk.Frame):
         
         #click button to proceed
         cont = tk.Button(self, text = 'CONTINUE',
-                   command=lambda: master.switch_frame(Kitchen))
+                   command=lambda: master.switch_frame(Intro))
         cont_window = w.create_window(480, 600, window = cont)
  
 #initialize Intro screen, with character and game background               
@@ -309,12 +309,6 @@ class Foyer(tk.Frame):
         photo = PIL.ImageTk.PhotoImage(im)
         screen = w.create_image((0,0), image = photo, anchor = 'nw')
         w.image = photo
-        
-        
-        door = tk.Button(self, text="Testing testing 1 2 3 ", #this is temporary for testing
-                   command=lambda: master.switch_frame(Library))
-        door_window = w.create_window(500,300, window = door)
-        
 
         #exit game      
         ex = PIL.Image.open('quit.png')
