@@ -19,7 +19,7 @@ num_stirs=[0]
 cauldron_items={}
 
 #dictionary of the recipe for the potion
-recipe={'ashes (1 tbsp)':8, 'curdled blood':1, "troll's hair":2, 'plastic plant leaf':10, 'tears':1,'paprika':1, 'black pepper':1}
+recipe={'ashes':1, 'curdled blood':1, "troll's hair":1, 'plastic plant leaf':1, 'tears':1,'paprika':1, 'black pepper':1}
 
 '''
 first_vis = list containing boolean values for each room
@@ -893,7 +893,7 @@ class Dungeon(tk.Frame):
         left_window = w.create_window(229, 481, window = left, anchor  = 'nw')  
         
         midleft = tk.Button(self, image = clr, background = "#454545", borderwidth=0, relief = 'flat', width = 65, height = 75,
-                   command=lambda: master.add_item("ashes (1 tbsp)"))
+                   command=lambda: master.add_item("ashes"))
         midleft.image=clr
         midleft_window = w.create_window(372, 454, window = midleft, anchor  = 'nw')  
         
