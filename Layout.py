@@ -10,7 +10,7 @@ from tkinter import messagebox
 import random
 
 #dictionary of items in the inventory
-inventory = {'hello':1, 'world': 2}
+inventory = {}
 
 #the number of times that the cauldron has been stirred
 num_stirs=[0]
@@ -19,7 +19,7 @@ num_stirs=[0]
 cauldron_items={}
 
 #dictionary of the recipe for the potion
-recipe={'ashes (1 tbsp)':8, 'curdled blood':1, "troll's hair":2, 'plastic plant leaves':10, 'tears':1,'paprika':1, 'black pepper':1}
+recipe={'ashes (1 tbsp)':8, 'curdled blood':1, "troll's hair":2, 'plastic plant leaf':10, 'tears':1,'paprika':1, 'black pepper':1}
 
 '''
 first_vis = list containing boolean values for each room
@@ -760,37 +760,14 @@ class Oven(tk.Frame):
         w = tk.Canvas(self, width=960, height=720)
         w.pack()
         
-        im = PIL.Image.open('Oven.png')
+        im = PIL.Image.open('OvenLose.png')
+        if 'Draught for Ultimate Strength' in inventory:
+            im = PIL.Image.open('OvenWin.png')
+        
         photo = PIL.ImageTk.PhotoImage(im)
         screen = w.create_image((0,0), image = photo, anchor = 'nw')
         w.image = photo
         
-        #exit game               
-        ex = PIL.Image.open('quit.png')
-        ex = ex.resize((100,100))
-        q = PIL.ImageTk.PhotoImage(ex)
-        quit = tk.Button(self, image = q, background = "#9f9f9f", borderwidth=0,
-                   command=lambda: master.switch_frame(End))
-        quit.image = q
-        quit_window = w.create_window(10, 70, window = quit, anchor  = 'nw')
-        
-        #view map
-        position = PIL.Image.open('map.png')
-        position = position.resize((70,90))
-        pos = PIL.ImageTk.PhotoImage(position)
-        loc = tk.Button(self, image = pos,background = "#959595", borderwidth=0,
-                   command=lambda: master.show_map())
-        loc.image = pos
-        loc_window = w.create_window(70, 650, window = loc)
-        
-        #view inventory
-        back = PIL.Image.open('backpack.png')
-        back = back.resize((85,100))
-        pack = PIL.ImageTk.PhotoImage(back)
-        inv = tk.Button(self, image = pack, background = "#959595", borderwidth=0,
-                   command=lambda: master.show_inventory())
-        inv.image = pack
-        inv_window = w.create_window(850, 650, window = inv)
 
 #initialize Troll screen and widgets            
 class Troll(tk.Frame):
@@ -1030,7 +1007,7 @@ class Garden(tk.Frame):
                    command=lambda: master.add_item("potted plant"))
         choosepot_window = w.create_window(480, 190, window = choosepot)
         choosetall = tk.Button(self, text = 'Choose Me',
-                   command=lambda: master.add_item("plastic plant leaves"))
+                   command=lambda: master.add_item("plastic plant leaf"))
         choosetall_window = w.create_window(667, 225, window = choosetall)
         
         #add to button so size is in pixels
@@ -1128,38 +1105,14 @@ class Cauldron(tk.Frame):
                    command=lambda: finish_potion())
         finish_window = w.create_window(480, 640, window = finish)
 
-#initialize End screen and widgets      
+#initialize End screen and widgets (if the user quits)    
 class End(tk.Frame):
     def __init__(self, master):
         tk.Frame.__init__(self, master)
         tk.Label(self, text = ' ').grid(row = 0, column = 0)
         tk.Label(self, text = ' ').grid(row = 1, column = 0)
         tk.Label(self, text = "Quitting, are you? You would have died if it wasn't a game, you know!").grid(row = 3, column = 0) ##   
-
-#intialize winning screen and widgets
-class Win(tk.Frame):
-    def __init__(self, master):
-        tk.Frame.__init__(self, master)
-        w = tk.Canvas(self, width=960, height=720)
-        w.pack()
-        
-        im = PIL.Image.open('win.jpg')
-        photo = PIL.ImageTk.PhotoImage(im)
-        screen = w.create_image((0,0), image = photo)
-        w.image = photo   
-
-#initialize losing screen and widgets
-class Lose(tk.Frame):
-    def __init__(self, master):
-        tk.Frame.__init__(self, master)
-        
-        w = tk.Canvas(self, width=960, height=720)
-        w.pack()
-        
-        im = PIL.Image.open('Garden.png')
-        photo = PIL.ImageTk.PhotoImage(im)
-        screen = w.create_image((0,0), image = photo, anchor = 'nw')
-        w.image = photo                                                                                                                                                                                                                                                                                                                                                                                                     
+                                                                                                                                                                                                                                                                                                                                                                                                 
     
 if __name__ == "__main__":
     app = SampleApp()
